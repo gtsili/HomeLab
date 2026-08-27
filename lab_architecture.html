@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hybrid Lab Architecture · ALPHA-002</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --border: #30363d;
+    --accent-blue: #58a6ff;
+    --accent-green: #3fb950;
+    --accent-orange: #d29922;
+    --accent-purple: #a371f7;
+    --accent-red: #f85149;
+    --accent-teal: #39d353;
+    --accent-cyan: #79c0ff;
+    --text: #e6edf3;
+    --text-muted: #8b949e;
+    --arm: #238636;
+    --x86: #1f6feb;
+    --net: #bb8009;
+    --id: #6e40c9;
+    --stor: #0969da;
+    --db: #da3633;
+    --obs: #1a7f37;
+    --cloud: #24292f;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--panel);
+    border-bottom: 2px solid var(--border);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  header h1 { font-size: 18px; font-weight: 600; color: var(--text); }
+  header .subtitle { color: var(--text-muted); font-size: 12px; margin-top: 3px; }
+  .version-block {
+    display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+  }
+  .ver-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px; border-radius: 6px; font-size: 13px; font-weight: 700;
+    background: #1c2d3f; color: var(--accent-blue); border: 1px solid var(--accent-blue);
+    letter-spacing: 0.04em;
+  }
+  .rev-info {
+    font-size: 10px; color: var(--text-muted); text-align: right; line-height: 1.5;
+  }
+
+  /* ── BADGE / LEGEND ── */
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 12px; font-size: 11px; font-weight: 500;
+  }
+  .badge-arm   { background: #1a3626; color: var(--accent-green); border: 1px solid #2ea043; }
+  .badge-x86   { background: #0d2149; color: var(--accent-cyan); border: 1px solid #1f6feb; }
+  .badge-net   { background: #2d2208; color: var(--accent-orange); border: 1px solid #bb8009; }
+  .badge-id    { background: #1e1535; color: var(--accent-purple); border: 1px solid #6e40c9; }
+  .badge-stor  { background: #0c1f3b; color: var(--accent-blue); border: 1px solid #0969da; }
+  .badge-db    { background: #3b0c0c; color: #ffa198; border: 1px solid #da3633; }
+  .badge-obs   { background: #0d2b1a; color: var(--accent-teal); border: 1px solid #1a7f37; }
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    padding: 10px 24px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ── CANVAS ── */
+  .canvas {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* ── ZONE ── */
+  .zone { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .zone-header {
+    padding: 8px 16px; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .zone-header .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .zone-body { padding: 16px; display: flex; flex-wrap: wrap; gap: 14px; }
+
+  .zone-arm   { border-color: #2ea043; }
+  .zone-arm   .zone-header { background: #1a3626; color: var(--accent-green); }
+  .zone-arm   .zone-header .dot { background: var(--accent-green); }
+  .zone-x86   { border-color: #1f6feb; }
+  .zone-x86   .zone-header { background: #0d2149; color: var(--accent-cyan); }
+  .zone-x86   .zone-header .dot { background: var(--accent-cyan); }
+  .zone-net   { border-color: #bb8009; }
+  .zone-net   .zone-header { background: #2d2208; color: var(--accent-orange); }
+  .zone-net   .zone-header .dot { background: var(--accent-orange); }
+  .zone-id    { border-color: #6e40c9; }
+  .zone-id    .zone-header { background: #1e1535; color: var(--accent-purple); }
+  .zone-id    .zone-header .dot { background: var(--accent-purple); }
+  .zone-stor  { border-color: #0969da; }
+  .zone-stor  .zone-header { background: #0c1f3b; color: var(--accent-blue); }
+  .zone-stor  .zone-header .dot { background: var(--accent-blue); }
+  .zone-db    { border-color: #da3633; }
+  .zone-db    .zone-header { background: #3b0c0c; color: #ffa198; }
+  .zone-db    .zone-header .dot { background: #ffa198; }
+  .zone-obs   { border-color: #1a7f37; }
+  .zone-obs   .zone-header { background: #0d2b1a; color: var(--accent-teal); }
+  .zone-obs   .zone-header .dot { background: var(--accent-teal); }
+  .zone-cloud { border-color: #444c56; }
+  .zone-cloud .zone-header { background: #1c2128; color: #adbac7; }
+  .zone-cloud .zone-header .dot { background: #adbac7; }
+  .zone-overlay { border-color: #553098; border-style: dashed; }
+  .zone-overlay .zone-header { background: #231d3f; color: #c8b1f5; }
+  .zone-overlay .zone-header .dot { background: #c8b1f5; box-shadow: 0 0 6px #a371f7; }
+
+  /* ── NODE CARD ── */
+  .node {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; min-width: 180px; flex: 1; max-width: 260px;
+    cursor: default; transition: border-color 0.15s, box-shadow 0.15s; position: relative;
+  }
+  .node:hover {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 0 1px var(--accent-blue), 0 4px 16px rgba(88,166,255,0.12);
+  }
+  .node-title {
+    font-weight: 700; font-size: 13px; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .node-icon { font-size: 16px; }
+  .node-tag {
+    font-size: 10px; color: var(--text-muted);
+    background: #21262d; border-radius: 4px; padding: 1px 5px; margin-left: auto;
+  }
+  .node-props { list-style: none; }
+  .node-props li {
+    color: var(--text-muted); font-size: 11px; padding: 1px 0;
+    display: flex; align-items: flex-start; gap: 5px;
+  }
+  .node-props li::before { content: "›"; color: var(--border); flex-shrink: 0; }
+  .node-props .val { color: var(--text); font-family: monospace; font-size: 11px; }
+
+  .node-arm  { border-left: 3px solid var(--accent-green); }
+  .node-x86  { border-left: 3px solid var(--accent-cyan); }
+  .node-net  { border-left: 3px solid var(--accent-orange); }
+  .node-id   { border-left: 3px solid var(--accent-purple); }
+  .node-stor { border-left: 3px solid var(--accent-blue); }
+  .node-db   { border-left: 3px solid #ffa198; }
+  .node-obs  { border-left: 3px solid var(--accent-teal); }
+  .node-cloud{ border-left: 3px solid #adbac7; }
+  .node-ovl  { border-left: 3px solid #c8b1f5; }
+
+  /* ── SVG NODE ICONS ── */
+  .node-svg-icon {
+    width: 18px;
+    height: 18px;
+    vertical-align: middle;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  /* ── DECISION LOG ── */
+  .decision-log {
+    margin: 0 24px 0;
+    border: 1px solid #1c3a5f;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .decision-log-header {
+    background: #0c1f3b;
+    padding: 10px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .decision-log-header h2 {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--accent-blue);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .decision-log-header .ad-count {
+    font-size: 11px; color: var(--text-muted);
+    background: #21262d; border-radius: 10px; padding: 2px 8px;
+  }
+  .ad-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .ad-table th {
+    text-align: left; padding: 7px 12px;
+    background: #111820; color: var(--text-muted);
+    font-weight: 600; border-bottom: 1px solid var(--border);
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .ad-table td { padding: 7px 12px; border-bottom: 1px solid #1a1f27; vertical-align: top; }
+  .ad-table tr:last-child td { border-bottom: none; }
+  .ad-table tr:hover td { background: #111820; }
+  /* Category group header row */
+  .ad-group-row td {
+    background: #0d1b2e !important;
+    border-top: 2px solid #1c3a5f;
+    border-bottom: 1px solid #1c3a5f !important;
+    padding: 6px 12px;
+  }
+  .ad-group-row:first-of-type td { border-top: none; }
+  .ad-group-label {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.10em; color: var(--accent-blue);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .ad-group-label .gl-icon { font-size: 14px; }
+  .ad-group-label .gl-count {
+    font-size: 10px; font-weight: 500; color: var(--text-muted);
+    background: #21262d; border-radius: 8px; padding: 1px 7px;
+    text-transform: none; letter-spacing: normal;
+  }
+  .ad-id {
+    font-family: monospace; font-size: 11px; font-weight: 700;
+    color: var(--accent-blue); white-space: nowrap;
+  }
+  .ad-title {
+    font-size: 12px; font-weight: 600; color: var(--text);
+    margin-bottom: 5px; white-space: nowrap;
+  }
+  .ad-items {
+    list-style: none; margin: 0; padding: 0;
+  }
+  .ad-items li {
+    color: var(--text-muted); font-size: 11px;
+    padding: 2px 0;
+    display: flex; align-items: flex-start; gap: 6px;
+    line-height: 1.45;
+  }
+  .ad-items li::before { content: "›"; color: #444c56; flex-shrink: 0; margin-top: 0px; }
+  .ad-items code {
+    font-family: monospace; font-size: 11px; color: var(--accent-orange);
+    background: #21262d; padding: 1px 4px; border-radius: 3px;
+  }
+  .ad-items .val { color: var(--text); font-family: monospace; font-size: 11px; }
+  .ad-items .note { color: var(--text-muted); font-style: italic; }
+  .ad-status {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 2px 7px; border-radius: 10px; font-size: 10px; font-weight: 600;
+    white-space: nowrap;
+  }
+  .st-baseline { background: #1a3626; color: var(--accent-green); border: 1px solid #2ea043; }
+  .st-active   { background: #0d2149; color: var(--accent-cyan); border: 1px solid #1f6feb; }
+  .st-review   { background: #2d2208; color: var(--accent-orange); border: 1px solid #bb8009; }
+
+  /* ── SECTION HELPERS ── */
+  .section-wrap { border-top: 1px solid var(--border); padding-top: 16px; }
+  .section-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-muted);
+    padding: 0 24px 8px; border-bottom: 1px solid var(--border); margin-bottom: 0;
+  }
+  .row { display: flex; gap: 20px; flex-wrap: wrap; }
+  .row .zone { flex: 1; min-width: 340px; }
+
+  /* ── LINK MAP ── */
+  .link-map {
+    display: flex; flex-direction: column; gap: 4px;
+    padding: 16px 24px; background: var(--panel); border-top: 1px solid var(--border);
+  }
+  .link-map h3 {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 8px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .link-row { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+  .link-src { color: var(--text); font-family: monospace; min-width: 120px; }
+  .link-arrow { color: var(--text-muted); }
+  .link-dst { color: var(--text); font-family: monospace; min-width: 120px; }
+  .link-proto { padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; }
+  .lp-tb    { background: #1a3626; color: var(--accent-green); }
+  .lp-10g   { background: #0d2149; color: var(--accent-cyan); }
+  .lp-ldap  { background: #1e1535; color: var(--accent-purple); }
+  .lp-oidc  { background: #1e1535; color: #e8b4fb; }
+  .lp-ts    { background: #231d3f; color: #c8b1f5; }
+  .lp-nfs   { background: #0c1f3b; color: var(--accent-blue); }
+  .lp-iscsi { background: #0c1f3b; color: #79c0ff; }
+  .lp-s3    { background: #0c1f3b; color: #58a6ff; }
+  .lp-syslog{ background: #0d2b1a; color: var(--accent-teal); }
+
+  /* ── VLAN TABLE ── */
+  .vlan-table { padding: 16px 24px; }
+  .vlan-table h3 {
+    font-size: 12px; color: var(--text-muted); margin-bottom: 10px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { text-align: left; padding: 6px 10px; background: var(--panel); color: var(--text-muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+  td { padding: 5px 10px; border-bottom: 1px solid #21262d; }
+  tr:hover td { background: #161b22; }
+  .vid    { font-family: monospace; color: var(--accent-orange); }
+  .subnet { font-family: monospace; color: var(--accent-blue); }
+  .purpose { color: var(--text-muted); }
+
+  /* ── IP GRID ── */
+  .ip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 10px; padding: 16px 24px;
+  }
+  .ip-entry {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 6px; padding: 10px 12px;
+  }
+  .ip-host { font-weight: 600; font-size: 12px; margin-bottom: 4px; }
+  .ip-addr { font-family: monospace; font-size: 11px; color: var(--accent-blue); }
+  .ip-role { font-size: 10px; color: var(--text-muted); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 12px 24px; border-top: 2px solid var(--border);
+    color: var(--text-muted); font-size: 11px; background: var(--panel);
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  }
+  .footer-ver {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .footer-ver .ver-pill {
+    font-family: monospace; font-size: 10px; font-weight: 700;
+    background: #1c2d3f; color: var(--accent-blue);
+    border: 1px solid #1f6feb; border-radius: 4px; padding: 2px 6px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     HEADER
+════════════════════════════════════════════════ -->
+<header>
+  <div>
+    <h1>🏗️ Hybrid Lab — Full Architecture Blueprint</h1>
+    <div class="subtitle">Mixed ARM64 (Apple Silicon) + x86-64 · vSphere · Proxmox · Mikrotik · Tailscale · FreeIPA/AD · MinIO · ELK</div>
+  </div>
+  <div class="version-block">
+    <span class="ver-badge">📋 ALPHA-002</span>
+    <div class="rev-info">
+      Revision: ALPHA-002 &nbsp;|&nbsp; Date: 2026-08-26<br>
+      Prev: ALPHA-001 (2026-08-25) — initial blueprint<br>
+      AD-001 → AD-015 baselined this revision
+    </div>
+  </div>
+</header>
+<div style="background:#161b22;border-bottom:1px solid #30363d;padding:6px 20px;display:flex;gap:18px;align-items:center;font-size:12px;color:#8b949e;">
+  <span style="color:#58a6ff;font-weight:600;">📂 Related Docs:</span>
+  <a href="lab_networking-ALPHA-002.html" style="color:#3fb950;text-decoration:none;" title="Network Topology Diagrams — Logical, VLAN, k3s SDN">🌐 lab_networking-ALPHA-002</a>
+  <span style="color:#30363d">|</span>
+  <span style="color:#484f58;">lab_architecture-ALPHA-001 (archived)</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LEGEND
+════════════════════════════════════════════════ -->
+<div class="legend">
+  <span class="badge badge-arm">● ARM64 / Apple Silicon</span>
+  <span class="badge badge-x86">● x86-64</span>
+  <span class="badge badge-net">● Networking</span>
+  <span class="badge badge-id">● Identity / Auth</span>
+  <span class="badge badge-stor">● Storage</span>
+  <span class="badge badge-db">● Databases</span>
+  <span class="badge badge-obs">● Observability</span>
+  <span class="badge" style="background:#1c2128;color:#adbac7;border:1px solid #444c56;">● Cloud / Hybrid</span>
+  <span class="badge" style="background:#231d3f;color:#c8b1f5;border:1px dashed #553098;">⋯ Overlay (Tailscale)</span>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     ARCHITECTURAL DECISION LOG
+════════════════════════════════════════════════ -->
+<div style="padding: 20px 0 4px;">
+<div class="decision-log">
+  <div class="decision-log-header">
+    <h2>📐 Architectural Decision Log</h2>
+    <span class="ad-count">15 decisions · ALPHA-002 baseline</span>
+  </div>
+  <table class="ad-table">
+    <thead>
+      <tr>
+        <th style="width:72px">ID</th>
+        <th style="width:200px">Decision Title</th>
+        <th>Items</th>
+        <th style="width:90px">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- ════════════════════════════════════════
+           GROUP 1 — COMPUTE PLATFORM
+      ════════════════════════════════════════ -->
+      <tr class="ad-group-row">
+        <td colspan="4">
+          <div class="ad-group-label">
+            <span class="gl-icon">🖥️</span> 1 · Compute Platform
+            <span class="gl-count">4 decisions · AD-001 – AD-003 · AD-013</span>
+          </div>
+        </td>
+      </tr>
+
+      <!-- AD-001 -->
+      <tr>
+        <td class="ad-id">AD-001</td>
+        <td>
+          <div class="ad-title">ARM64 Nodes — Mac Mini</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li>Hardware: 3× Apple Mac Mini (Apple Silicon — ARM64)</li>
+            <li>Roles: <code>mm-cp</code> = control plane + embedded etcd &nbsp;·&nbsp; <code>mm-w1</code>, <code>mm-w2</code> = ARM workers</li>
+            <li>Interconnect: Thunderbolt 4 mesh (40 Gb/s) — triangle topology where 2 TB ports exist per node</li>
+            <li>TB4 subnet: <code>192.168.100.0/24</code> &nbsp;·&nbsp; MTU 9000 &nbsp;·&nbsp; carries etcd heartbeat + pod overlay traffic</li>
+            <li>10 GbE uplink to lab switch per node (VLAN 20 primary)</li>
+            <li>OS: Asahi Linux (ARM64 — full native, no emulation)</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- AD-002 -->
+      <tr>
+        <td class="ad-id">AD-002</td>
+        <td>
+          <div class="ad-title">Kubernetes — k3s Distribution</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li>Distribution: k3s — lightweight, native ARM64 support, single binary</li>
+            <li>Control plane: k3s server with embedded etcd on <code>mm-cp</code></li>
+            <li>Workers: k3s agent on all nodes (ARM + x86)</li>
+            <li>Runtime: containerd on every node</li>
+            <li>K8s API endpoint: <code>10.10.0.10:6443</code> (mm-cp) — fronted by HAProxy VIP</li>
+            <li>Pod CIDR: <code>10.42.0.0/16</code> &nbsp;·&nbsp; Service CIDR: <code>10.43.0.0/16</code> (k3s defaults)</li>
+            <li>Rationale: k3s chosen over full kubeadm for reduced resource footprint on Apple Silicon</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- AD-003 -->
+      <tr>
+        <td class="ad-id">AD-003</td>
+        <td>
+          <div class="ad-title">x86-64 Nodes — ESXi + Proxmox</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li><strong>VMware vSphere:</strong> 2× ESXi 8.x hosts managed by vCenter/VCSA</li>
+            <li>vSphere HA enabled &nbsp;·&nbsp; DRS with anti-affinity rules &nbsp;·&nbsp; vDS VLAN trunk (VLANs 10/20/30/40)</li>
+            <li>ESXi Host 1: mgmt <code>10.10.10.101</code> &nbsp;·&nbsp; storage NIC <code>10.10.30.101</code> &nbsp;·&nbsp; vMotion <code>10.10.40.101</code></li>
+            <li>ESXi Host 2: mgmt <code>10.10.10.102</code> &nbsp;·&nbsp; storage NIC <code>10.10.30.102</code></li>
+            <li><strong>Proxmox VE:</strong> 3-node cluster (PVE 8.x, Corosync quorum, VLAN-aware bridge vmbr0)</li>
+            <li>Proxmox nodes: <code>10.10.10.111</code> – <code>10.10.10.113</code> &nbsp;·&nbsp; KVM VMs + LXC containers</li>
+            <li>Proxmox Backup Server (PBS) integrated for VM/CT snapshots</li>
+            <li><strong>x86 K8s workers:</strong> <code>x86-w1</code> (<code>10.10.0.20</code>) and <code>x86-w2</code> (<code>10.10.0.21</code>) as k3s agents (amd64)</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- AD-013 -->
+      <tr>
+        <td class="ad-id">AD-013</td>
+        <td>
+          <div class="ad-title">Multi-arch Workload Scheduling</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li>ARM nodes: labeled <code>arch=arm64</code> — default scheduling target</li>
+            <li>x86 workers: tainted <code>arch=amd64:NoSchedule</code> — opt-in only</li>
+            <li>QEMU binfmt installed on all x86 workers — enables cross-arch image execution for testing</li>
+            <li>Image policy: multi-arch images (BuildKit buildx multi-node builder) are <strong>mandatory</strong> for all cluster-wide workloads (DaemonSets, system pods)</li>
+            <li>Single-arch images: must declare matching <code>nodeSelector</code> + toleration — no implicit placement permitted</li>
+            <li>CI/CD: multi-arch builds produced via GitHub Actions self-hosted runners (one ARM + one x86)</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- ════════════════════════════════════════
+           GROUP 2 — NETWORK ARCHITECTURE
+      ════════════════════════════════════════ -->
+      <tr class="ad-group-row">
+        <td colspan="4">
+          <div class="ad-group-label">
+            <span class="gl-icon">🌐</span> 2 · Network Architecture
+            <span class="gl-count">4 decisions · AD-004 · AD-005 · AD-006 · AD-012</span>
+          </div>
+        </td>
+      </tr>
+
+      <!-- AD-004 -->
+      <tr>
+        <td class="ad-id">AD-004</td>
+        <td>
+          <div class="ad-title">Core Networking — Mikrotik + Switch</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li><strong>Router:</strong> Mikrotik RouterOS (CCR/hEX) — gateway for all VLANs</li>
+            <li>WAN: ISP uplink with NAT/masquerade</li>
+            <li>Routing: inter-VLAN L3 routing &nbsp;·&nbsp; OSPF/BGP for internal route distribution</li>
+            <li>Firewall: filter chains + mangle + NAT rules enforced at router</li>
+            <li>VPN: WireGuard site-to-cloud tunnel (Mikrotik native) &nbsp;·&nbsp; static route for Tailscale CGNAT <code>100.64.0.0/10</code></li>
+            <li><strong>Switch:</strong> 10 GbE managed switch — VLAN trunk to all nodes</li>
+            <li>MTU 9000 (jumbo frames) on switch &nbsp;·&nbsp; LACP uplinks to router &nbsp;·&nbsp; flow control ON &nbsp;·&nbsp; EEE disabled (latency priority)</li>
+            <li>Port isolation enforced per VLAN — no intra-VLAN leakage</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- AD-005 -->
+      <tr>
+        <td class="ad-id">AD-005</td>
+        <td>
+          <div class="ad-title">VLAN &amp; CIDR Design</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li>VLAN <strong>10</strong> — Management &nbsp;<code>10.10.10.0/24</code>&nbsp; MTU 1500 &nbsp;·&nbsp; ESXi mgmt, vCenter, iDRAC/iLO, Mikrotik, Proxmox Web UI</li>
+            <li>VLAN <strong>20</strong> — VM LAN &nbsp;<code>10.10.20.0/24</code>&nbsp; MTU 1500 &nbsp;·&nbsp; General VMs, applications, K8s node IPs, services</li>
+            <li>VLAN <strong>30</strong> — Storage &nbsp;<code>10.10.30.0/24</code>&nbsp; MTU 9000 &nbsp;·&nbsp; iSCSI, NFS, MinIO — dedicated, no other traffic</li>
+            <li>VLAN <strong>40</strong> — vMotion/Migration &nbsp;<code>10.10.40.0/24</code>&nbsp; MTU 9000 &nbsp;·&nbsp; VMware vMotion, Proxmox live migration</li>
+            <li>VLAN <strong>50</strong> — DMZ &nbsp;<code>10.10.50.0/24</code>&nbsp; MTU 1500 &nbsp;·&nbsp; Internet-facing services, reverse proxy, Tailscale exit node</li>
+            <li>Thunderbolt mesh subnet: <code>192.168.100.0/24</code> &nbsp;·&nbsp; MTU 9000 &nbsp;·&nbsp; Mac Mini intra-ARM only</li>
+            <li>K8s Pod CIDR: <code>10.42.0.0/16</code> &nbsp;·&nbsp; K8s Service CIDR: <code>10.43.0.0/16</code> &nbsp;(k3s defaults)</li>
+            <li>Tailscale CGNAT: <code>100.64.0.0/10</code> &nbsp;·&nbsp; WireGuard overlay — remote access only</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- AD-006 -->
+      <tr>
+        <td class="ad-id">AD-006</td>
+        <td>
+          <div class="ad-title">Load Balancing &amp; High Availability</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li>Stack: HAProxy + Keepalived (VRRP) — active/standby pair</li>
+            <li>VIP: <code>10.10.20.100</code> &nbsp;·&nbsp; failover time: &lt;1 second</li>
+            <li>L7 HTTPS: host-based routing — backends: Grafana, MinIO, Kibana, apps</li>
+            <li>L4 passthrough: K8s API port <code>6443</code> forwarded to <code>mm-cp</code></li>
+            <li>TLS offload: internal CA certificate presented at VIP for all HTTPS backends</li>
+            <li>Health checks: per-backend active health probes</li>
+            <li>Stats/monitoring: <code>:8404/stats</code> endpoint (HAProxy native)</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- AD-012 -->
+      <tr>
+        <td class="ad-id">AD-012</td>
+        <td>
+          <div class="ad-title">Tailscale Overlay Network</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li>Overlay: Tailscale WireGuard CGNAT <code>100.64.0.0/10</code> — remote access without public IPs</li>
+            <li>Subnet router: advertises <code>10.10.0.0/16</code> — all lab hosts reachable from tailnet without per-host agent</li>
+            <li>Mikrotik: static route <code>100.64.0.0/10</code> → subnet router (return path for lab-initiated traffic)</li>
+            <li>Exit node: lab internet egress on untrusted networks &nbsp;·&nbsp; flag: <code>--advertise-exit-node</code></li>
+            <li>ACL: default-deny policy &nbsp;·&nbsp; <code>group:admins → all:*</code> &nbsp;·&nbsp; <code>group:readonly → metrics ports only</code></li>
+            <li>DNS: MagicDNS enabled &nbsp;·&nbsp; split DNS resolves <code>lab.local</code> internally</li>
+            <li>K8s Operator: exposes selected K8s Services to tailnet (e.g. <code>grafana-lab.ts.net</code>, <code>minio-lab.ts.net</code>)</li>
+            <li>SSH: Tailscale SSH + SSH CA (step-ca) for zero-trust host access</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- ════════════════════════════════════════
+           GROUP 3 — STORAGE LAYER
+      ════════════════════════════════════════ -->
+      <tr class="ad-group-row">
+        <td colspan="4">
+          <div class="ad-group-label">
+            <span class="gl-icon">💾</span> 3 · Storage Layer
+            <span class="gl-count">1 decision · AD-007</span>
+          </div>
+        </td>
+      </tr>
+
+      <!-- AD-007 -->
+      <tr>
+        <td class="ad-id">AD-007</td>
+        <td>
+          <div class="ad-title">Storage Backends &amp; Topology</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li>All storage traffic isolated to <strong>VLAN 30</strong> (<code>10.10.30.0/24</code>, MTU 9000) — no mixing with VM or management traffic</li>
+            <li><strong>NFS</strong> — RHEL 8 server at <code>10.10.30.10</code> &nbsp;·&nbsp; NFSv4.1 &nbsp;·&nbsp; exports: <code>/srv/nfs/vms</code> (ESXi+PVE), <code>/srv/nfs/k8s</code> (PVCs), <code>/srv/nfs/isos</code> (read-only)</li>
+            <li><strong>iSCSI</strong> — LIO/targetcli at <code>10.10.30.20:3260</code> &nbsp;·&nbsp; LVM thin pool backend &nbsp;·&nbsp; MPIO 2-path per host &nbsp;·&nbsp; shared VMFS datastores for ESXi HA</li>
+            <li><strong>MinIO (S3)</strong> — at <code>10.10.30.30</code> &nbsp;·&nbsp; ports: API <code>9000</code>, Console <code>9001</code> &nbsp;·&nbsp; TLS via internal CA</li>
+            <li>MinIO buckets: <code>backups</code>, <code>artifacts</code>, <code>registry-cache</code></li>
+            <li>MinIO clients: mc, rclone, AWS CLI — used for DR replication to S3 (cloud)</li>
+            <li><strong>Ceph</strong> (Proxmox-integrated) — NVMe OSDs on all 3 PVE nodes &nbsp;·&nbsp; replicas: 2 (lab) / 3 (prod-grade) &nbsp;·&nbsp; pools: <code>vm-pool</code>, <code>k8s-pool</code></li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- ════════════════════════════════════════
+           GROUP 4 — IDENTITY & SECURITY
+      ════════════════════════════════════════ -->
+      <tr class="ad-group-row">
+        <td colspan="4">
+          <div class="ad-group-label">
+            <span class="gl-icon">🔐</span> 4 · Identity &amp; Security
+            <span class="gl-count">2 decisions · AD-008 · AD-009</span>
+          </div>
+        </td>
+      </tr>
+
+      <!-- AD-008 -->
+      <tr>
+        <td class="ad-id">AD-008</td>
+        <td>
+          <div class="ad-title">Identity &amp; Authentication Chain</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li>Architecture: three-tier federated identity chain — AD → FreeIPA → Keycloak SSO</li>
+            <li><strong>Active Directory</strong> at <code>10.10.10.5</code> (Windows Server 2022) &nbsp;·&nbsp; domain: <code>lab.local</code> &nbsp;·&nbsp; authoritative DNS + LDAP <code>389/636</code> + Kerberos <code>88</code></li>
+            <li><strong>FreeIPA</strong> at <code>10.10.10.6</code> (RHEL) &nbsp;·&nbsp; LDAP + Kerberos + DNS &nbsp;·&nbsp; cross-realm trust established with AD domain</li>
+            <li>FreeIPA provides: SSSD on all Linux hosts (PAM, SSH, sudo policy engine) &nbsp;·&nbsp; Internal CA integration</li>
+            <li><strong>Keycloak SSO</strong> at <code>sso.lab.local</code> &nbsp;·&nbsp; backends (brokers): AD + FreeIPA via LDAP</li>
+            <li>Keycloak protocols: OIDC and SAML 2.0 &nbsp;·&nbsp; backend DB: PostgreSQL</li>
+            <li>Keycloak SSO clients: Grafana (OIDC), MinIO (OIDC), Kibana (SAML), vSphere, Proxmox, K8s API</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- AD-009 -->
+      <tr>
+        <td class="ad-id">AD-009</td>
+        <td>
+          <div class="ad-title">PKI &amp; SSH Certificate Authority</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li>PKI: step-ca at <code>ca.lab.local</code> (<code>10.10.20.81</code>) — two-tier hierarchy: Root CA → Intermediate CA</li>
+            <li>ACME provisioner: automatic TLS certificate issuance + renewal (90-day lifetime)</li>
+            <li>TLS consumers: Keycloak, MinIO, Grafana, Kibana, HAProxy — all present internal CA certificates</li>
+            <li>CRL and OCSP endpoints published for certificate status checks</li>
+            <li>SSH CA: step-ca issues host certificates + user certificates (replaces static authorized_keys)</li>
+            <li>Trust distribution: Ansible playbook pushes root CA cert to all hosts' trust stores on provisioning</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- ════════════════════════════════════════
+           GROUP 5 — DATA SERVICES
+      ════════════════════════════════════════ -->
+      <tr class="ad-group-row">
+        <td colspan="4">
+          <div class="ad-group-label">
+            <span class="gl-icon">📊</span> 5 · Data Services
+            <span class="gl-count">2 decisions · AD-010 · AD-011</span>
+          </div>
+        </td>
+      </tr>
+
+      <!-- AD-010 -->
+      <tr>
+        <td class="ad-id">AD-010</td>
+        <td>
+          <div class="ad-title">Database Platform</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li><strong>MariaDB Galera Cluster</strong> — 3-node multi-master for high availability</li>
+            <li>VIP: <code>10.10.20.200:3306</code> (HAProxy fronted) &nbsp;·&nbsp; InnoDB buffer pool: 4 GB</li>
+            <li>Backup: Velero (k8s-aware) + mysqldump scheduled exports → MinIO</li>
+            <li>Alternative config: single primary + replica + HAProxy (for simpler setups)</li>
+            <li><strong>Oracle Database</strong> 19c/21c — dedicated RHEL 8 VM at <code>10.10.20.60:1521</code></li>
+            <li>Oracle SID: <code>LABDB</code> &nbsp;·&nbsp; VM allocated: 8 GB RAM minimum &nbsp;·&nbsp; RMAN backups → MinIO bucket</li>
+            <li><strong>PostgreSQL</strong> at port <code>5432</code> — primary use: Keycloak backend + application service databases</li>
+            <li>PostgreSQL streaming replication: optional (configured per-deployment)</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- AD-011 -->
+      <tr>
+        <td class="ad-id">AD-011</td>
+        <td>
+          <div class="ad-title">Observability Stack</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li><strong>Logging — ELK Stack:</strong></li>
+            <li>Elasticsearch: 3-node cluster at <code>10.10.20.70:9200</code> &nbsp;·&nbsp; X-Pack security &nbsp;·&nbsp; ILM 90-day retention &nbsp;·&nbsp; indices: syslog, k8s, audit</li>
+            <li>Logstash: syslog intake <code>:5000</code> UDP/TCP &nbsp;·&nbsp; Beats input <code>:5044</code> &nbsp;·&nbsp; sources: Mikrotik, ESXi, RHEL, k8s</li>
+            <li>Filebeat: DaemonSet deployed in k8s — tails container and node logs &nbsp;·&nbsp; ships to Logstash</li>
+            <li>Kibana at <code>kibana.lab.local</code> &nbsp;·&nbsp; SSO via Keycloak (SAML) &nbsp;·&nbsp; Dashboards, Discover, Alerts</li>
+            <li><strong>Metrics — Prometheus + Grafana:</strong></li>
+            <li>kube-prometheus-stack deployed via Helm — includes Prometheus, Alertmanager, kube-state-metrics</li>
+            <li>node-exporter: DaemonSet on all nodes — multi-arch images (ARM64 + amd64)</li>
+            <li>Grafana at <code>grafana.lab.local:3000</code> &nbsp;·&nbsp; SSO via Keycloak (OIDC) &nbsp;·&nbsp; Alertmanager → PagerDuty/webhook</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- ════════════════════════════════════════
+           GROUP 6 — OPERATIONS & INTEGRATION
+      ════════════════════════════════════════ -->
+      <tr class="ad-group-row">
+        <td colspan="4">
+          <div class="ad-group-label">
+            <span class="gl-icon">⚙️</span> 6 · Operations &amp; Integration
+            <span class="gl-count">2 decisions · AD-014 · AD-015</span>
+          </div>
+        </td>
+      </tr>
+
+      <!-- AD-014 -->
+      <tr>
+        <td class="ad-id">AD-014</td>
+        <td>
+          <div class="ad-title">Cloud &amp; Hybrid Integration</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li><strong>Cloud burst compute:</strong> AWS/Azure/GCP VMs joined to tailnet — used for CI/CD runners and native amd64 multi-arch builds</li>
+            <li><strong>Disaster recovery replication:</strong></li>
+            <li>MinIO → S3 (cloud): rclone scheduled sync via Tailscale/WireGuard tunnel (offsite backup)</li>
+            <li>MariaDB → Cloud RDS: DR replica for relational data</li>
+            <li>Elasticsearch CCR (cross-cluster replication) → cloud ES cluster</li>
+            <li><strong>Site-to-cloud VPN:</strong> WireGuard tunnel configured natively on Mikrotik router</li>
+            <li><strong>Legacy interop bridge layer:</strong></li>
+            <li>Samba: CIFS file shares with AD authentication (Windows client compatibility)</li>
+            <li>nginx <code>auth_request</code>: retrofits Keycloak SSO onto legacy HTTP applications</li>
+            <li>FreeRADIUS: replaces Cisco ACS — 802.1X / RADIUS for network device authentication</li>
+            <li>Logstash SNMP input: polls legacy devices (no syslog support) → ELK pipeline</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+      <!-- AD-015 -->
+      <tr>
+        <td class="ad-id">AD-015</td>
+        <td>
+          <div class="ad-title">Automation &amp; Change Control Policy</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li><strong>Ansible:</strong> all provisioning and configuration procedures are Ansible playbooks — idempotent, no manual snowflake changes permitted</li>
+            <li><strong>GitOps:</strong> Flux or ArgoCD manages all k8s workload state — no <code>kubectl apply</code> from local machines</li>
+            <li><strong>CI/CD pipeline:</strong> GitHub Actions with self-hosted runners (1× ARM + 1× x86) — multi-arch image builds on every push</li>
+            <li><strong>Change log:</strong> every change recorded with timestamp, operator ID, pre-change snapshot, post-change snapshot, and metric export</li>
+            <li><strong>No snowflakes:</strong> node state is code — any undocumented manual change is a policy violation</li>
+            <li><strong>Blueprint maintenance (mandatory):</strong> <code>lab_architecture.html</code> and all persistent lab documents updated on every architectural decision — no exceptions</li>
+          </ul>
+        </td>
+        <td></td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     ARCHITECTURE CANVAS
+════════════════════════════════════════════════ -->
+<div class="canvas">
+
+  <!-- ROW 1: NETWORK CORE -->
+  <div class="zone zone-net">
+    <div class="zone-header"><span class="dot"></span>Network Core — Mikrotik RouterOS · AD-004</div>
+    <div class="zone-body">
+      <div class="node node-net">
+        <div class="node-title"><span class="node-icon">🌐</span> Core Router / Firewall <span class="node-tag">Mikrotik CCR/hEX</span></div>
+        <ul class="node-props">
+          <li>WAN uplink (ISP NAT / masquerade)</li>
+          <li>Inter-VLAN routing (L3)</li>
+          <li>Firewall: filter + mangle + NAT</li>
+          <li>OSPF / BGP (internal routing)</li>
+          <li>Tailscale CGNAT static route</li>
+          <li>WireGuard: site-to-cloud tunnel</li>
+        </ul>
+      </div>
+      <div class="node node-net">
+        <div class="node-title"><span class="node-icon">🔀</span> 10 GbE Switch <span class="node-tag">Managed L2/L3</span></div>
+        <ul class="node-props">
+          <li>VLAN trunk to all nodes</li>
+          <li>MTU 9000 (jumbo frames)</li>
+          <li>LACP uplinks to router</li>
+          <li>Flow control enabled</li>
+          <li>EEE disabled (latency priority)</li>
+          <li>Port isolation per VLAN</li>
+        </ul>
+      </div>
+      <div class="node node-net">
+        <div class="node-title"><span class="node-icon">⚖️</span> HAProxy + Keepalived <span class="node-tag">VIP: 10.10.20.100</span></div>
+        <ul class="node-props">
+          <li>L7 HTTPS termination + routing</li>
+          <li>VRRP VIP failover (&lt;1 s) — AD-006</li>
+          <li>Backend: Grafana, MinIO, Apps</li>
+          <li>K8s API L4 (port 6443)</li>
+          <li>TLS offload (internal CA cert)</li>
+          <li>Stats: <span class="val">:8404/stats</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 2: COMPUTE -->
+  <div class="row">
+    <!-- ARM ZONE -->
+    <div class="zone zone-arm">
+      <div class="zone-header"><span class="dot"></span>ARM64 Compute — 3× Apple Mac Mini · AD-001, AD-002</div>
+      <div class="zone-body">
+        <div class="node node-arm">
+          <div class="node-title"><span class="node-icon">🍎</span> mm-cp <span class="node-tag">Control Plane</span></div>
+          <ul class="node-props">
+            <li>OS: <span class="val">Asahi Linux (ARM64)</span></li>
+            <li>k3s server (etcd embedded)</li>
+            <li>NFS server export</li>
+            <li>TB4 IP: <span class="val">192.168.100.1</span></li>
+            <li>10GbE IP: <span class="val">10.10.0.10</span></li>
+            <li>Tailscale: <span class="val">100.x.x.10</span></li>
+          </ul>
+        </div>
+        <div class="node node-arm">
+          <div class="node-title"><span class="node-icon">🍎</span> mm-w1 <span class="node-tag">ARM Worker</span></div>
+          <ul class="node-props">
+            <li>OS: <span class="val">Asahi Linux (ARM64)</span></li>
+            <li>k3s agent</li>
+            <li>containerd runtime</li>
+            <li>TB4 IP: <span class="val">192.168.100.2</span></li>
+            <li>10GbE IP: <span class="val">10.10.0.11</span></li>
+          </ul>
+        </div>
+        <div class="node node-arm">
+          <div class="node-title"><span class="node-icon">🍎</span> mm-w2 <span class="node-tag">ARM Worker</span></div>
+          <ul class="node-props">
+            <li>OS: <span class="val">Asahi Linux (ARM64)</span></li>
+            <li>k3s agent</li>
+            <li>containerd runtime</li>
+            <li>TB4 IP: <span class="val">192.168.100.3</span></li>
+            <li>10GbE IP: <span class="val">10.10.0.12</span></li>
+          </ul>
+        </div>
+        <div class="node node-arm" style="max-width:100%;flex-basis:100%;">
+          <div class="node-title"><span class="node-icon">⚡</span> Thunderbolt 4 Mesh (40 Gb/s) <span class="node-tag">MTU 9000</span></div>
+          <ul class="node-props" style="display:flex;gap:20px;flex-wrap:wrap;">
+            <li>mm-cp ←TB4→ mm-w1 ←TB4→ mm-w2</li>
+            <li>Triangle topology (2 ports/node)</li>
+            <li>Subnet: <span class="val">192.168.100.0/24</span></li>
+            <li>etcd heartbeat + pod overlay traffic</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- x86 ZONE -->
+    <div class="zone zone-x86">
+      <div class="zone-header"><span class="dot"></span>x86-64 Compute — VMware ESXi + Proxmox · AD-003, AD-013</div>
+      <div class="zone-body">
+        <div class="node node-x86">
+          <div class="node-title"><svg class="node-svg-icon" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg" aria-label="VMware ESXi"><rect width="32" height="24" rx="3" fill="#1D428A"/><text x="16" y="12" text-anchor="middle" fill="#00B6D3" font-size="9" font-weight="900" font-family="Arial,Helvetica,sans-serif">vm</text><text x="16" y="21" text-anchor="middle" fill="white" font-size="6" font-family="Arial,Helvetica,sans-serif" letter-spacing="0.5">ESXi</text></svg> ESXi Host 1 <span class="node-tag">vSphere</span></div>
+          <ul class="node-props">
+            <li>VMware ESXi 8.x</li>
+            <li>vCenter managed (VCSA VM)</li>
+            <li>vDS: VLAN trunk (10,20,30,40)</li>
+            <li>Mgmt: <span class="val">10.10.10.101</span></li>
+            <li>Storage: <span class="val">10.10.30.101</span> (iSCSI/NFS)</li>
+            <li>vMotion: <span class="val">10.10.40.101</span></li>
+          </ul>
+        </div>
+        <div class="node node-x86">
+          <div class="node-title"><svg class="node-svg-icon" viewBox="0 0 32 24" xmlns="http://www.w3.org/2000/svg" aria-label="VMware ESXi"><rect width="32" height="24" rx="3" fill="#1D428A"/><text x="16" y="12" text-anchor="middle" fill="#00B6D3" font-size="9" font-weight="900" font-family="Arial,Helvetica,sans-serif">vm</text><text x="16" y="21" text-anchor="middle" fill="white" font-size="6" font-family="Arial,Helvetica,sans-serif" letter-spacing="0.5">ESXi</text></svg> ESXi Host 2 <span class="node-tag">vSphere</span></div>
+          <ul class="node-props">
+            <li>VMware ESXi 8.x</li>
+            <li>Shared datastores (iSCSI/NFS)</li>
+            <li>vSphere HA enabled</li>
+            <li>DRS: anti-affinity rules</li>
+            <li>Mgmt: <span class="val">10.10.10.102</span></li>
+          </ul>
+        </div>
+        <div class="node node-x86">
+          <div class="node-title"><svg class="node-svg-icon" viewBox="0 0 32 26" xmlns="http://www.w3.org/2000/svg" aria-label="Proxmox VE"><rect width="32" height="26" rx="3" fill="#242424"/><path d="M4,4 L15,13 L4,22" fill="none" stroke="#E57000" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/><path d="M17,4 L28,13 L17,22" fill="none" stroke="#E57000" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/></svg> Proxmox Cluster <span class="node-tag">PVE 3-node</span></div>
+          <ul class="node-props">
+            <li>Proxmox VE 8.x (Corosync)</li>
+            <li>KVM VMs + LXC containers</li>
+            <li>Ceph storage (replicated)</li>
+            <li>Proxmox Backup Server (PBS)</li>
+            <li>VLAN-aware bridge (vmbr0)</li>
+            <li>Nodes: <span class="val">10.10.10.111–113</span></li>
+          </ul>
+        </div>
+        <div class="node node-x86">
+          <div class="node-title"><svg class="node-svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Linux"><ellipse cx="12" cy="17" rx="7" ry="6.5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4"/><ellipse cx="12" cy="18.5" rx="4" ry="4.5" fill="#f0f0ec"/><circle cx="12" cy="7" r="5.5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4"/><ellipse cx="12" cy="7.8" rx="3.5" ry="3" fill="#e8b84b"/><ellipse cx="10.2" cy="6.2" rx="1.4" ry="1.7" fill="white"/><circle cx="10.5" cy="6.5" r="0.85" fill="#1a1a1a"/><ellipse cx="13.8" cy="6.2" rx="1.4" ry="1.7" fill="white"/><circle cx="14.1" cy="6.5" r="0.85" fill="#1a1a1a"/><ellipse cx="12" cy="9.2" rx="1.6" ry="0.8" fill="#d07000"/><ellipse cx="5.8" cy="17" rx="2.8" ry="5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4" transform="rotate(12 5.8 17)"/><ellipse cx="18.2" cy="17" rx="2.8" ry="5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4" transform="rotate(-12 18.2 17)"/><ellipse cx="9.5" cy="23" rx="3" ry="1" fill="#d07000" transform="rotate(-15 9.5 23)"/><ellipse cx="14.5" cy="23" rx="3" ry="1" fill="#d07000" transform="rotate(15 14.5 23)"/></svg> k3s x86 Workers <span class="node-tag">AMD64</span></div>
+          <ul class="node-props">
+            <li>k3s agent (amd64)</li>
+            <li>Taint: <span class="val">arch=amd64:NoSchedule</span></li>
+            <li>x86-w1: <span class="val">10.10.0.20</span></li>
+            <li>x86-w2: <span class="val">10.10.0.21</span></li>
+            <li>containerd + QEMU binfmt (AD-013)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 3: STORAGE + IDENTITY -->
+  <div class="row">
+    <!-- STORAGE -->
+    <div class="zone zone-stor">
+      <div class="zone-header"><span class="dot"></span>Storage Layer — VLAN 30 (10.10.30.0/24) · AD-007</div>
+      <div class="zone-body">
+        <div class="node node-stor">
+          <div class="node-title"><svg class="node-svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Linux"><ellipse cx="12" cy="17" rx="7" ry="6.5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4"/><ellipse cx="12" cy="18.5" rx="4" ry="4.5" fill="#f0f0ec"/><circle cx="12" cy="7" r="5.5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4"/><ellipse cx="12" cy="7.8" rx="3.5" ry="3" fill="#e8b84b"/><ellipse cx="10.2" cy="6.2" rx="1.4" ry="1.7" fill="white"/><circle cx="10.5" cy="6.5" r="0.85" fill="#1a1a1a"/><ellipse cx="13.8" cy="6.2" rx="1.4" ry="1.7" fill="white"/><circle cx="14.1" cy="6.5" r="0.85" fill="#1a1a1a"/><ellipse cx="12" cy="9.2" rx="1.6" ry="0.8" fill="#d07000"/><ellipse cx="5.8" cy="17" rx="2.8" ry="5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4" transform="rotate(12 5.8 17)"/><ellipse cx="18.2" cy="17" rx="2.8" ry="5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4" transform="rotate(-12 18.2 17)"/><ellipse cx="9.5" cy="23" rx="3" ry="1" fill="#d07000" transform="rotate(-15 9.5 23)"/><ellipse cx="14.5" cy="23" rx="3" ry="1" fill="#d07000" transform="rotate(15 14.5 23)"/></svg> NFS Server <span class="node-tag">RHEL 8</span></div>
+          <ul class="node-props">
+            <li>nfs-utils, NFSv4.1</li>
+            <li>/srv/nfs/vms → ESXi + PVE</li>
+            <li>/srv/nfs/k8s → k8s PVCs</li>
+            <li>/srv/nfs/isos → read-only</li>
+            <li>IP: <span class="val">10.10.30.10</span></li>
+          </ul>
+        </div>
+        <div class="node node-stor">
+          <div class="node-title"><svg class="node-svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Linux"><ellipse cx="12" cy="17" rx="7" ry="6.5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4"/><ellipse cx="12" cy="18.5" rx="4" ry="4.5" fill="#f0f0ec"/><circle cx="12" cy="7" r="5.5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4"/><ellipse cx="12" cy="7.8" rx="3.5" ry="3" fill="#e8b84b"/><ellipse cx="10.2" cy="6.2" rx="1.4" ry="1.7" fill="white"/><circle cx="10.5" cy="6.5" r="0.85" fill="#1a1a1a"/><ellipse cx="13.8" cy="6.2" rx="1.4" ry="1.7" fill="white"/><circle cx="14.1" cy="6.5" r="0.85" fill="#1a1a1a"/><ellipse cx="12" cy="9.2" rx="1.6" ry="0.8" fill="#d07000"/><ellipse cx="5.8" cy="17" rx="2.8" ry="5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4" transform="rotate(12 5.8 17)"/><ellipse cx="18.2" cy="17" rx="2.8" ry="5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4" transform="rotate(-12 18.2 17)"/><ellipse cx="9.5" cy="23" rx="3" ry="1" fill="#d07000" transform="rotate(-15 9.5 23)"/><ellipse cx="14.5" cy="23" rx="3" ry="1" fill="#d07000" transform="rotate(15 14.5 23)"/></svg> iSCSI Target <span class="node-tag">LIO / targetcli</span></div>
+          <ul class="node-props">
+            <li>LVM thin pool backend</li>
+            <li>MPIO (2 paths per host)</li>
+            <li>Shared VMFS datastores</li>
+            <li>IP: <span class="val">10.10.30.20</span></li>
+            <li>Port: <span class="val">3260/tcp</span></li>
+          </ul>
+        </div>
+        <div class="node node-stor">
+          <div class="node-title"><span class="node-icon">🪣</span> MinIO (S3) <span class="node-tag">Object Storage</span></div>
+          <ul class="node-props">
+            <li>S3-compatible API</li>
+            <li>Buckets: backups, artifacts, registry-cache</li>
+            <li>TLS (internal CA)</li>
+            <li>IP: <span class="val">10.10.30.30</span></li>
+            <li>Ports: <span class="val">9000 / 9001</span></li>
+            <li>mc + rclone + AWS CLI clients</li>
+          </ul>
+        </div>
+        <div class="node node-stor">
+          <div class="node-title"><span class="node-icon">🐙</span> Ceph (Proxmox) <span class="node-tag">Distributed Block</span></div>
+          <ul class="node-props">
+            <li>OSDs on PVE nodes (NVMe)</li>
+            <li>Replicas: 2 (lab), 3 (prod)</li>
+            <li>Pools: vm-pool, k8s-pool</li>
+            <li>Health: ceph status</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- IDENTITY -->
+    <div class="zone zone-id">
+      <div class="zone-header"><span class="dot"></span>Identity, Auth &amp; SSO Plane · AD-008, AD-009</div>
+      <div class="zone-body">
+        <div class="node node-id">
+          <div class="node-title"><span class="node-icon">🪟</span> Active Directory <span class="node-tag">Windows VM</span></div>
+          <ul class="node-props">
+            <li>Domain: <span class="val">lab.local</span></li>
+            <li>Domain Controller (Windows Server 2022)</li>
+            <li>DNS for lab.local</li>
+            <li>LDAP: <span class="val">port 389/636</span></li>
+            <li>Kerberos: <span class="val">port 88</span></li>
+            <li>IP: <span class="val">10.10.10.5</span></li>
+          </ul>
+        </div>
+        <div class="node node-id">
+          <div class="node-title"><svg class="node-svg-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Linux"><ellipse cx="12" cy="17" rx="7" ry="6.5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4"/><ellipse cx="12" cy="18.5" rx="4" ry="4.5" fill="#f0f0ec"/><circle cx="12" cy="7" r="5.5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4"/><ellipse cx="12" cy="7.8" rx="3.5" ry="3" fill="#e8b84b"/><ellipse cx="10.2" cy="6.2" rx="1.4" ry="1.7" fill="white"/><circle cx="10.5" cy="6.5" r="0.85" fill="#1a1a1a"/><ellipse cx="13.8" cy="6.2" rx="1.4" ry="1.7" fill="white"/><circle cx="14.1" cy="6.5" r="0.85" fill="#1a1a1a"/><ellipse cx="12" cy="9.2" rx="1.6" ry="0.8" fill="#d07000"/><ellipse cx="5.8" cy="17" rx="2.8" ry="5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4" transform="rotate(12 5.8 17)"/><ellipse cx="18.2" cy="17" rx="2.8" ry="5" fill="#3a4048" stroke="#5a6070" stroke-width="0.4" transform="rotate(-12 18.2 17)"/><ellipse cx="9.5" cy="23" rx="3" ry="1" fill="#d07000" transform="rotate(-15 9.5 23)"/><ellipse cx="14.5" cy="23" rx="3" ry="1" fill="#d07000" transform="rotate(15 14.5 23)"/></svg> FreeIPA <span class="node-tag">RHEL IAM</span></div>
+          <ul class="node-props">
+            <li>LDAP + Kerberos + DNS</li>
+            <li>SSSD on all Linux hosts</li>
+            <li>Sudo policy engine</li>
+            <li>Cross-realm trust → AD</li>
+            <li>Internal CA integration</li>
+            <li>IP: <span class="val">10.10.10.6</span></li>
+          </ul>
+        </div>
+        <div class="node node-id">
+          <div class="node-title"><span class="node-icon">🔑</span> Keycloak (SSO) <span class="node-tag">OIDC / SAML</span></div>
+          <ul class="node-props">
+            <li>Brokers: AD + FreeIPA (LDAP)</li>
+            <li>Clients: Grafana, MinIO, Kibana, vSphere, Proxmox, K8s</li>
+            <li>Protocols: OIDC, SAML 2.0</li>
+            <li>URL: <span class="val">https://sso.lab.local</span></li>
+            <li>DB: PostgreSQL backend</li>
+          </ul>
+        </div>
+        <div class="node node-id">
+          <div class="node-title"><span class="node-icon">🔐</span> Internal PKI <span class="node-tag">step-ca</span></div>
+          <ul class="node-props">
+            <li>Root CA → Intermediate CA</li>
+            <li>ACME provisioner (auto-renew)</li>
+            <li>SSH CA (host + user certs)</li>
+            <li>CRL + OCSP</li>
+            <li>Trust distributed via Ansible</li>
+            <li>URL: <span class="val">https://ca.lab.local</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 4: DATABASES + OBSERVABILITY -->
+  <div class="row">
+    <div class="zone zone-db">
+      <div class="zone-header"><span class="dot"></span>Databases · AD-010</div>
+      <div class="zone-body">
+        <div class="node node-db">
+          <div class="node-title"><span class="node-icon">🐬</span> MariaDB <span class="node-tag">HA / Galera</span></div>
+          <ul class="node-props">
+            <li>Galera 3-node multi-master</li>
+            <li>Or: master + replica + HAProxy</li>
+            <li>InnoDB: <span class="val">innodb_buffer 4G</span></li>
+            <li>Backup: Velero / mysqldump</li>
+            <li>VIP: <span class="val">10.10.20.200:3306</span></li>
+          </ul>
+        </div>
+        <div class="node node-db">
+          <div class="node-title"><svg class="node-svg-icon" viewBox="0 0 32 20" xmlns="http://www.w3.org/2000/svg" aria-label="Oracle DB"><rect width="32" height="20" rx="3" fill="#C74634"/><text x="16" y="14" text-anchor="middle" fill="white" font-size="8" font-weight="bold" font-family="Arial,Helvetica,sans-serif" letter-spacing="0.5">ORACLE</text></svg> Oracle DB <span class="node-tag">RHEL 8 VM</span></div>
+          <ul class="node-props">
+            <li>Oracle 19c / 21c</li>
+            <li>Dedicated RHEL VM (8 GB RAM)</li>
+            <li>RMAN backups → MinIO</li>
+            <li>listener: <span class="val">port 1521</span></li>
+            <li>SID: <span class="val">LABDB</span></li>
+          </ul>
+        </div>
+        <div class="node node-db">
+          <div class="node-title"><span class="node-icon">🐘</span> PostgreSQL <span class="node-tag">Keycloak / Apps</span></div>
+          <ul class="node-props">
+            <li>Keycloak backend DB</li>
+            <li>App service databases</li>
+            <li>Port: <span class="val">5432</span></li>
+            <li>Streaming replication (optional)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="zone zone-obs">
+      <div class="zone-header"><span class="dot"></span>Observability — ELK + Prometheus/Grafana · AD-011</div>
+      <div class="zone-body">
+        <div class="node node-obs">
+          <div class="node-title"><span class="node-icon">🔍</span> Elasticsearch <span class="node-tag">3-node cluster</span></div>
+          <ul class="node-props">
+            <li>X-Pack security enabled</li>
+            <li>ILM: 90-day retention</li>
+            <li>Indices: syslog, k8s, audit</li>
+            <li>HTTP: <span class="val">10.10.20.70:9200</span></li>
+          </ul>
+        </div>
+        <div class="node node-obs">
+          <div class="node-title"><span class="node-icon">📊</span> Kibana <span class="node-tag">SAML/OIDC SSO</span></div>
+          <ul class="node-props">
+            <li>Dashboards, Discover, Alerts</li>
+            <li>SSO via Keycloak (SAML)</li>
+            <li>URL: <span class="val">https://kibana.lab.local</span></li>
+          </ul>
+        </div>
+        <div class="node node-obs">
+          <div class="node-title"><span class="node-icon">⚙️</span> Logstash + Filebeat <span class="node-tag">Pipeline</span></div>
+          <ul class="node-props">
+            <li>Syslog: <span class="val">:5000 UDP/TCP</span></li>
+            <li>Beats: <span class="val">:5044</span></li>
+            <li>Filebeat DaemonSet (k8s)</li>
+            <li>Sources: Mikrotik, ESXi, RHEL, k8s</li>
+          </ul>
+        </div>
+        <div class="node node-obs">
+          <div class="node-title"><span class="node-icon">📈</span> Prometheus + Grafana <span class="node-tag">Metrics</span></div>
+          <ul class="node-props">
+            <li>kube-prometheus-stack (Helm)</li>
+            <li>Node exporter DaemonSet (all arches)</li>
+            <li>Grafana SSO via Keycloak (OIDC)</li>
+            <li>Alerts: PagerDuty / Alertmanager</li>
+            <li>URL: <span class="val">https://grafana.lab.local</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROW 5: TAILSCALE + CLOUD -->
+  <div class="row">
+    <div class="zone zone-overlay">
+      <div class="zone-header"><span class="dot"></span>Tailscale Overlay Network (100.64.0.0/10 CGNAT) · AD-012</div>
+      <div class="zone-body">
+        <div class="node node-ovl">
+          <div class="node-title"><span class="node-icon">🔗</span> Subnet Router <span class="node-tag">RHEL / PVE node</span></div>
+          <ul class="node-props">
+            <li>Advertises: <span class="val">10.10.0.0/16</span></li>
+            <li>All lab hosts reachable remotely</li>
+            <li>No Tailscale needed per-host</li>
+            <li>Mikrotik static route → <span class="val">100.64.0.0/10</span></li>
+          </ul>
+        </div>
+        <div class="node node-ovl">
+          <div class="node-title"><span class="node-icon">🌍</span> Exit Node <span class="node-tag">Lab internet egress</span></div>
+          <ul class="node-props">
+            <li>Routes all Tailscale client traffic</li>
+            <li>Useful on untrusted networks</li>
+            <li>Enable: <span class="val">--advertise-exit-node</span></li>
+          </ul>
+        </div>
+        <div class="node node-ovl">
+          <div class="node-title"><span class="node-icon">🛡️</span> ACL Policy <span class="node-tag">Default deny</span></div>
+          <ul class="node-props">
+            <li>group:admins → all:*</li>
+            <li>group:readonly → metrics ports only</li>
+            <li>SSH CA via Tailscale SSH</li>
+            <li>MagicDNS + split DNS (lab.local)</li>
+          </ul>
+        </div>
+        <div class="node node-ovl">
+          <div class="node-title"><span class="node-icon">☸️</span> K8s Operator <span class="node-tag">Service exposure</span></div>
+          <ul class="node-props">
+            <li>Exposes K8s Services to tailnet</li>
+            <li>grafana-lab.ts.net, minio-lab.ts.net</li>
+            <li>No public IP required</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="zone zone-cloud">
+      <div class="zone-header"><span class="dot"></span>Cloud / Hybrid Extensions · AD-014</div>
+      <div class="zone-body">
+        <div class="node node-cloud">
+          <div class="node-title"><span class="node-icon">☁️</span> Cloud Compute <span class="node-tag">AWS / Azure / GCP</span></div>
+          <ul class="node-props">
+            <li>Tailscale-joined burst workers</li>
+            <li>CI/CD runners (GitHub Actions)</li>
+            <li>Multi-arch builds (amd64 native)</li>
+            <li>DR target (MinIO → S3 sync)</li>
+          </ul>
+        </div>
+        <div class="node node-cloud">
+          <div class="node-title"><span class="node-icon">🔄</span> Replication <span class="node-tag">rclone / MinIO mirror</span></div>
+          <ul class="node-props">
+            <li>MinIO → S3 (backup offsite)</li>
+            <li>MariaDB → Cloud RDS (DR replica)</li>
+            <li>ES CCR (cross-cluster replication)</li>
+          </ul>
+        </div>
+        <div class="node node-cloud">
+          <div class="node-title"><span class="node-icon">🏗️</span> Legacy Bridge <span class="node-tag">Interop layer</span></div>
+          <ul class="node-props">
+            <li>Samba (CIFS ↔ AD auth)</li>
+            <li>nginx auth_request (legacy → Keycloak)</li>
+            <li>FreeRADIUS (replace Cisco ACS)</li>
+            <li>Logstash SNMP (legacy monitoring)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /canvas -->
+
+<!-- ═══════════════════════════════════════════════
+     VLAN TABLE
+════════════════════════════════════════════════ -->
+<div class="section-wrap">
+<div class="vlan-table">
+  <h3>VLAN Design · AD-005</h3>
+  <table>
+    <tr><th>VLAN ID</th><th>Name</th><th>Subnet</th><th>MTU</th><th>Purpose</th></tr>
+    <tr><td class="vid">10</td><td>Management</td><td class="subnet">10.10.10.0/24</td><td>1500</td><td class="purpose">ESXi mgmt, vCenter, iDRAC/iLO, Mikrotik, Proxmox Web UI</td></tr>
+    <tr><td class="vid">20</td><td>VM LAN</td><td class="subnet">10.10.20.0/24</td><td>1500</td><td class="purpose">General VMs, applications, K8s node IPs, services</td></tr>
+    <tr><td class="vid">30</td><td>Storage</td><td class="subnet">10.10.30.0/24</td><td>9000</td><td class="purpose">iSCSI, NFS, MinIO — dedicated storage traffic only</td></tr>
+    <tr><td class="vid">40</td><td>vMotion / Migration</td><td class="subnet">10.10.40.0/24</td><td>9000</td><td class="purpose">VMware vMotion, Proxmox live migration</td></tr>
+    <tr><td class="vid">50</td><td>DMZ</td><td class="subnet">10.10.50.0/24</td><td>1500</td><td class="purpose">Internet-facing services, reverse proxy, Tailscale exit</td></tr>
+    <tr><td class="vid">TB</td><td>Thunderbolt Mesh</td><td class="subnet">192.168.100.0/24</td><td>9000</td><td class="purpose">Mac Mini TB4 intra-ARM traffic, etcd heartbeats</td></tr>
+    <tr><td class="vid">—</td><td>K8s Pods</td><td class="subnet">10.42.0.0/16</td><td>1450</td><td class="purpose">Kubernetes pod CIDR (k3s default)</td></tr>
+    <tr><td class="vid">—</td><td>K8s Services</td><td class="subnet">10.43.0.0/16</td><td>—</td><td class="purpose">Kubernetes service CIDR (ClusterIP)</td></tr>
+    <tr><td class="vid">—</td><td>Tailscale</td><td class="subnet">100.64.0.0/10</td><td>—</td><td class="purpose">WireGuard overlay (CGNAT) — remote access</td></tr>
+  </table>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     IP MAP
+════════════════════════════════════════════════ -->
+<div class="section-wrap">
+<div class="vlan-table" style="padding-bottom:0">
+  <h3>Key Host IP Addresses</h3>
+</div>
+<div class="ip-grid">
+  <div class="ip-entry"><div class="ip-host">🍎 mm-cp (Control Plane)</div><div class="ip-addr">10.10.0.10 / 192.168.100.1</div><div class="ip-role">k3s server · NFS · Tailscale subnet router</div></div>
+  <div class="ip-entry"><div class="ip-host">🍎 mm-w1 (ARM Worker)</div><div class="ip-addr">10.10.0.11 / 192.168.100.2</div><div class="ip-role">k3s agent · ARM64</div></div>
+  <div class="ip-entry"><div class="ip-host">🍎 mm-w2 (ARM Worker)</div><div class="ip-addr">10.10.0.12 / 192.168.100.3</div><div class="ip-role">k3s agent · ARM64</div></div>
+  <div class="ip-entry"><div class="ip-host">💻 x86-w1</div><div class="ip-addr">10.10.0.20</div><div class="ip-role">k3s agent · amd64</div></div>
+  <div class="ip-entry"><div class="ip-host">💻 x86-w2</div><div class="ip-addr">10.10.0.21</div><div class="ip-role">k3s agent · amd64</div></div>
+  <div class="ip-entry"><div class="ip-host">🌐 Mikrotik Core Router</div><div class="ip-addr">10.10.10.1 (gateway)</div><div class="ip-role">VLAN routing · firewall · WireGuard</div></div>
+  <div class="ip-entry"><div class="ip-host">🪟 Active Directory DC</div><div class="ip-addr">10.10.10.5</div><div class="ip-role">DNS · LDAP · Kerberos · lab.local</div></div>
+  <div class="ip-entry"><div class="ip-host">🐧 FreeIPA</div><div class="ip-addr">10.10.10.6</div><div class="ip-role">IPA · LDAP · Kerberos · DNS</div></div>
+  <div class="ip-entry"><div class="ip-host">🔑 Keycloak SSO</div><div class="ip-addr">10.10.20.80 → sso.lab.local</div><div class="ip-role">OIDC · SAML · SSO broker</div></div>
+  <div class="ip-entry"><div class="ip-host">🔐 step-ca PKI</div><div class="ip-addr">10.10.20.81 → ca.lab.local</div><div class="ip-role">Internal CA · ACME · SSH CA</div></div>
+  <div class="ip-entry"><div class="ip-host">⚖️ HAProxy VIP</div><div class="ip-addr">10.10.20.100</div><div class="ip-role">L7 LB · TLS offload · VRRP</div></div>
+  <div class="ip-entry"><div class="ip-host">📁 NFS Server</div><div class="ip-addr">10.10.30.10</div><div class="ip-role">NFSv4.1 exports</div></div>
+  <div class="ip-entry"><div class="ip-host">💾 iSCSI Target</div><div class="ip-addr">10.10.30.20</div><div class="ip-role">LIO targetcli · port 3260</div></div>
+  <div class="ip-entry"><div class="ip-host">🪣 MinIO (S3)</div><div class="ip-addr">10.10.30.30 → minio.lab.local</div><div class="ip-role">S3 API :9000 · Console :9001</div></div>
+  <div class="ip-entry"><div class="ip-host">🐬 MariaDB VIP</div><div class="ip-addr">10.10.20.200</div><div class="ip-role">Galera / HA · port 3306</div></div>
+  <div class="ip-entry"><div class="ip-host">🏛️ Oracle DB</div><div class="ip-addr">10.10.20.60</div><div class="ip-role">Oracle 19c · port 1521 · SID LABDB</div></div>
+  <div class="ip-entry"><div class="ip-host">🔍 Elasticsearch</div><div class="ip-addr">10.10.20.70</div><div class="ip-role">ELK · port 9200</div></div>
+  <div class="ip-entry"><div class="ip-host">📊 Kibana</div><div class="ip-addr">10.10.20.71 → kibana.lab.local</div><div class="ip-role">Dashboards · port 5601</div></div>
+  <div class="ip-entry"><div class="ip-host">📈 Grafana</div><div class="ip-addr">10.10.20.72 → grafana.lab.local</div><div class="ip-role">Prometheus · port 3000</div></div>
+  <div class="ip-entry"><div class="ip-host">💻 ESXi Host 1</div><div class="ip-addr">10.10.10.101 / 10.10.30.101</div><div class="ip-role">vSphere · storage NIC</div></div>
+  <div class="ip-entry"><div class="ip-host">💻 ESXi Host 2</div><div class="ip-addr">10.10.10.102 / 10.10.30.102</div><div class="ip-role">vSphere · storage NIC</div></div>
+  <div class="ip-entry"><div class="ip-host">🖥️ Proxmox Nodes</div><div class="ip-addr">10.10.10.111–113</div><div class="ip-role">PVE cluster · KVM · LXC · Ceph</div></div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     TRAFFIC PATHS
+════════════════════════════════════════════════ -->
+<div class="link-map">
+  <h3>Key Traffic Paths</h3>
+  <div class="link-row"><span class="link-src">mm-cp / mm-w1 / mm-w2</span><span class="link-arrow">⟺</span><span class="link-dst">each other</span><span class="link-proto lp-tb">TB4 40Gb/s</span><span style="color:var(--text-muted)">etcd, pod overlay, intra-ARM traffic · AD-001</span></div>
+  <div class="link-row"><span class="link-src">All k8s nodes</span><span class="link-arrow">⟺</span><span class="link-dst">k3s API (mm-cp)</span><span class="link-proto lp-10g">10GbE :6443</span><span style="color:var(--text-muted)">Kubernetes control plane</span></div>
+  <div class="link-row"><span class="link-src">ESXi / Proxmox</span><span class="link-arrow">→</span><span class="link-dst">NFS / iSCSI server</span><span class="link-proto lp-nfs">NFS/iSCSI</span><span style="color:var(--text-muted)">VLAN 30 storage traffic, MTU 9000 · AD-007</span></div>
+  <div class="link-row"><span class="link-src">All services</span><span class="link-arrow">→</span><span class="link-dst">Keycloak (SSO)</span><span class="link-proto lp-oidc">OIDC/SAML</span><span style="color:var(--text-muted)">Grafana, MinIO, Kibana, vSphere, Proxmox, K8s · AD-008</span></div>
+  <div class="link-row"><span class="link-src">Keycloak / FreeIPA</span><span class="link-arrow">→</span><span class="link-dst">Active Directory</span><span class="link-proto lp-ldap">LDAP :389</span><span style="color:var(--text-muted)">User federation and cross-realm trust · AD-008</span></div>
+  <div class="link-row"><span class="link-src">All Linux hosts</span><span class="link-arrow">→</span><span class="link-dst">FreeIPA / AD</span><span class="link-proto lp-ldap">SSSD/Kerberos</span><span style="color:var(--text-muted)">SSH auth, sudo, PAM</span></div>
+  <div class="link-row"><span class="link-src">All TLS endpoints</span><span class="link-arrow">→</span><span class="link-dst">step-ca</span><span class="link-proto lp-oidc">ACME</span><span style="color:var(--text-muted)">Certificate auto-renewal (90-day) · AD-009</span></div>
+  <div class="link-row"><span class="link-src">All nodes</span><span class="link-arrow">→</span><span class="link-dst">Logstash / Filebeat</span><span class="link-proto lp-syslog">Syslog/Beats</span><span style="color:var(--text-muted)">Centralised log pipeline → ELK · AD-011</span></div>
+  <div class="link-row"><span class="link-src">MinIO (lab)</span><span class="link-arrow">→</span><span class="link-dst">S3 (cloud)</span><span class="link-proto lp-s3">S3/rclone</span><span style="color:var(--text-muted)">Offsite backup replication via Tailscale/WireGuard · AD-014</span></div>
+  <div class="link-row"><span class="link-src">Remote clients</span><span class="link-arrow">→</span><span class="link-dst">Subnet Router → lab</span><span class="link-proto lp-ts">Tailscale WG</span><span style="color:var(--text-muted)">Encrypted remote access, no public IPs needed · AD-012</span></div>
+  <div class="link-row"><span class="link-src">HAProxy VIP</span><span class="link-arrow">→</span><span class="link-dst">Grafana / MinIO / Apps</span><span class="link-proto lp-10g">HTTPS L7</span><span style="color:var(--text-muted)">TLS offload, host-based routing · AD-006</span></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-ver">
+    <span class="ver-pill">ALPHA-002</span>
+    <span>Hybrid Lab Architecture · Chief Engineering Reference Blueprint · 2026-08-26</span>
+  </div>
+  <span>ARM64 (Apple Silicon) + x86-64 · RHEL 8.10 · vSphere · Proxmox · Mikrotik · Tailscale · FreeIPA/AD/Keycloak · MinIO · ELK · 15 ADs baselined</span>
+</footer>
+
+</body>
+</html>
