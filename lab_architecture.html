@@ -348,7 +348,7 @@
     <div class="rev-info">
       Revision: ALPHA-002 &nbsp;|&nbsp; Date: 2026-08-26<br>
       Prev: ALPHA-001 (2026-08-25) — initial blueprint<br>
-      AD-001 → AD-015 baselined this revision
+      AD-001 → AD-015 baselined · AD-016 added 2026-08-27
     </div>
   </div>
 </header>
@@ -381,7 +381,7 @@
 <div class="decision-log">
   <div class="decision-log-header">
     <h2>📐 Architectural Decision Log</h2>
-    <span class="ad-count">15 decisions · ALPHA-002 baseline</span>
+    <span class="ad-count">16 decisions · AD-016 added 2026-08-27</span>
   </div>
   <table class="ad-table">
     <thead>
@@ -496,7 +496,7 @@
         <td colspan="4">
           <div class="ad-group-label">
             <span class="gl-icon">🌐</span> 2 · Network Architecture
-            <span class="gl-count">4 decisions · AD-004 · AD-005 · AD-006 · AD-012</span>
+            <span class="gl-count">5 decisions · AD-004 · AD-005 · AD-006 · AD-012 · AD-016</span>
           </div>
         </td>
       </tr>
@@ -538,7 +538,7 @@
             <li>VLAN <strong>40</strong> — vMotion/Migration &nbsp;<code>10.10.40.0/24</code>&nbsp; MTU 9000 &nbsp;·&nbsp; VMware vMotion, Proxmox live migration</li>
             <li>VLAN <strong>50</strong> — DMZ &nbsp;<code>10.10.50.0/24</code>&nbsp; MTU 1500 &nbsp;·&nbsp; Internet-facing services, reverse proxy, Tailscale exit node</li>
             <li>Thunderbolt mesh subnet: <code>192.168.100.0/24</code> &nbsp;·&nbsp; MTU 9000 &nbsp;·&nbsp; Mac Mini intra-ARM only</li>
-            <li>K8s Pod CIDR: <code>10.42.0.0/16</code> &nbsp;·&nbsp; K8s Service CIDR: <code>10.43.0.0/16</code> &nbsp;(k3s defaults)</li>
+            <li>K8s Pod CIDR: <code>10.42.0.0/16</code> + <code>fd42::/48</code> &nbsp;·&nbsp; K8s Service CIDR: <code>10.43.0.0/16</code> + <code>fd43::/112</code> &nbsp;·&nbsp; <strong>Dual-stack (AD-016)</strong> — IPv6 ULA scoped to k3s SDN only; underlay VLANs remain IPv4</li>
             <li>Tailscale CGNAT: <code>100.64.0.0/10</code> &nbsp;·&nbsp; WireGuard overlay — remote access only</li>
           </ul>
         </td>
@@ -586,6 +586,30 @@
           </ul>
         </td>
         <td></td>
+      </tr>
+
+      <!-- AD-016 -->
+      <tr>
+        <td class="ad-id">AD-016</td>
+        <td>
+          <div class="ad-title">k3s SDN Dual-Stack IPv4/IPv6</div>
+          <span class="ad-status st-baseline">✓ Baseline</span>
+          <span class="ad-status" style="background:#1e1535;color:#c8b1f5;border-color:#c8b1f5;margin-left:4px;">2026-08-27</span>
+        </td>
+        <td>
+          <ul class="ad-items">
+            <li><strong>Scope:</strong> dual-stack confined to k3s SDN overlay only — underlay VLANs (10, 20, 30, 40, 50) remain IPv4-only</li>
+            <li><strong>Pod CIDR:</strong> <code>10.42.0.0/16</code> (IPv4) + <code>fd42::/48</code> (ULA IPv6) — per-node slice /24 (v4) · /64 (v6)</li>
+            <li><strong>Service CIDR:</strong> <code>10.43.0.0/16</code> (IPv4) + <code>fd43::/112</code> (ULA IPv6)</li>
+            <li><strong>k3s init flags:</strong> <code>--cluster-cidr=10.42.0.0/16,fd42::/48 --service-cidr=10.43.0.0/16,fd43::/112</code></li>
+            <li><strong>CNI:</strong> Flannel VXLAN dual-stack — VXLAN ID 1 (IPv4, UDP :8472) · VXLAN ID 2 (IPv6, UDP :8473)</li>
+            <li><strong>kube-proxy:</strong> iptables dual-stack mode — ClusterIP, NodePort, and LoadBalancer all get v4+v6 endpoints</li>
+            <li><strong>CoreDNS:</strong> A + AAAA records — cluster DNS <code>10.43.0.10</code> / <code>fd43::a</code> · upstream → FreeIPA :53</li>
+            <li><strong>Node requirement:</strong> all k3s nodes must have an IPv6 address assigned on their primary interface (SLAAC or static ULA)</li>
+            <li><strong>Resolves open item:</strong> "IPv6 in-scope or out?" — in-scope for k3s SDN; underlay/VLAN IPv6 remains deferred</li>
+          </ul>
+        </td>
+        <td>Enables future IPv6-native workloads and dual-stack service exposure; isolates IPv6 complexity to the SDN layer without touching VLAN infrastructure</td>
       </tr>
 
       <!-- ════════════════════════════════════════
@@ -1274,7 +1298,7 @@
     <span class="ver-pill">ALPHA-002</span>
     <span>Hybrid Lab Architecture · Chief Engineering Reference Blueprint · 2026-08-26</span>
   </div>
-  <span>ARM64 (Apple Silicon) + x86-64 · RHEL 8.10 · vSphere · Proxmox · Mikrotik · Tailscale · FreeIPA/AD/Keycloak · MinIO · ELK · 15 ADs baselined</span>
+  <span>ARM64 (Apple Silicon) + x86-64 · RHEL 8.10 · vSphere · Proxmox · Mikrotik · Tailscale · FreeIPA/AD/Keycloak · MinIO · ELK · 16 ADs · k3s dual-stack SDN (AD-016)</span>
 </footer>
 
 </body>

@@ -1479,7 +1479,7 @@
     <span class="legend-title">Cluster legend</span>
     <span class="leg"><span class="leg-swatch" style="background:#122d1a;border-color:#3fb950"></span>ARM64 nodes (mm-cp, mm-w1, mm-w2)</span>
     <span class="leg"><span class="leg-swatch" style="background:#0c2a3d;border-color:#58a6ff"></span>AMD64 nodes (x86-w1, x86-w2)  taint: arch=amd64:NoSchedule</span>
-    <span class="leg"><span class="leg-swatch" style="background:#1c1a2d;border-color:#c8b1f5"></span>SDN Overlay (Flannel VXLAN  10.42/16  ·  svc 10.43/16)</span>
+    <span class="leg"><span class="leg-swatch" style="background:#1c1a2d;border-color:#c8b1f5"></span>SDN Overlay — Dual-Stack (pod 10.42/16+fd42::/48 · svc 10.43/16+fd43::/112) · AD-016</span>
     <span class="leg"><span class="leg-swatch" style="background:#0c2030;border-color:#79c0ff"></span>Storage Classes → NFS / iSCSI / Ceph</span>
     <span class="leg"><span class="leg-line" style="background:#3fb950;height:3px;border-radius:2px"></span>TB4 mesh (40 Gb/s, bold)</span>
     <span class="leg"><span class="leg-line dashed" style="color:#c8b1f5"></span>Dashed = Flannel / DNS / auth overlay</span>
@@ -1489,396 +1489,398 @@
  -->
 <!-- Title: k8s_cluster Pages: 1 -->
 <svg width="100%" style="max-width:100%;height:auto"
- viewBox="0.00 0.00 1510.00 1374.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(50.4 1323.5)">
+ viewBox="0.00 0.00 1715.00 1398.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(50.4 1347.3)">
 <title>k8s_cluster</title>
-<polygon fill="#0d1117" stroke="none" points="-50.4,50.4 -50.4,-1323.5 1459.42,-1323.5 1459.42,50.4 -50.4,50.4"/>
-<text xml:space="preserve" text-anchor="middle" x="233.74" y="-1262.65" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#e6edf3">k3s Cluster — SDN &amp; Node / Workload View</text>
-<text xml:space="preserve" text-anchor="middle" x="233.74" y="-1249.15" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#e6edf3">Pod CIDR: 10.42.0.0/16 &#160;· &#160;Service CIDR: 10.43.0.0/16 &#160;· &#160;CNI: Flannel VXLAN</text>
+<polygon fill="#0d1117" stroke="none" points="-50.4,50.4 -50.4,-1347.3 1664.42,-1347.3 1664.42,50.4 -50.4,50.4"/>
+<text xml:space="preserve" text-anchor="middle" x="412.61" y="-1286.45" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#e6edf3">k3s Cluster — SDN &amp; Node / Workload View</text>
+<text xml:space="preserve" text-anchor="middle" x="412.61" y="-1272.95" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#e6edf3">IPv4 Pod: 10.42.0.0/16 &#160;· &#160;IPv6 Pod: fd42::/48 &#160;· &#160;IPv4 Svc: 10.43.0.0/16 &#160;· &#160;IPv6 Svc: fd43::/112 &#160;· &#160;CNI: Flannel VXLAN dual&#45;stack &#160;· &#160;AD&#45;016</text>
 <g id="clust2" class="cluster">
 <title>cluster_cp</title>
-<path fill="#0d1f10" stroke="#3fb950" d="M755.77,-852.05C755.77,-852.05 934.77,-852.05 934.77,-852.05 940.77,-852.05 946.77,-858.05 946.77,-864.05 946.77,-864.05 946.77,-1002.2 946.77,-1002.2 946.77,-1008.2 940.77,-1014.2 934.77,-1014.2 934.77,-1014.2 755.77,-1014.2 755.77,-1014.2 749.77,-1014.2 743.77,-1008.2 743.77,-1002.2 743.77,-1002.2 743.77,-864.05 743.77,-864.05 743.77,-858.05 749.77,-852.05 755.77,-852.05"/>
-<text xml:space="preserve" text-anchor="middle" x="845.14" y="-1001.68" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#3fb950">Control Plane — ARM64 &#160;(Apple Mac Mini)</text>
+<path fill="#0d1f10" stroke="#3fb950" d="M891.77,-875.8C891.77,-875.8 1070.79,-875.8 1070.79,-875.8 1076.79,-875.8 1082.79,-881.8 1082.79,-887.8 1082.79,-887.8 1082.79,-1026 1082.79,-1026 1082.79,-1032 1076.79,-1038 1070.79,-1038 1070.79,-1038 891.77,-1038 891.77,-1038 885.77,-1038 879.77,-1032 879.77,-1026 879.77,-1026 879.77,-887.8 879.77,-887.8 879.77,-881.8 885.77,-875.8 891.77,-875.8"/>
+<text xml:space="preserve" text-anchor="middle" x="981.14" y="-1025.38" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#3fb950">Control Plane — ARM64 &#160;(Apple Mac Mini)</text>
 </g>
 <g id="clust3" class="cluster">
 <title>cluster_armwk</title>
-<path fill="#0d1f10" stroke="#3fb950" d="M417.77,-625.15C417.77,-625.15 769.77,-625.15 769.77,-625.15 775.77,-625.15 781.77,-631.15 781.77,-637.15 781.77,-637.15 781.77,-786.55 781.77,-786.55 781.77,-792.55 775.77,-798.55 769.77,-798.55 769.77,-798.55 417.77,-798.55 417.77,-798.55 411.77,-798.55 405.77,-792.55 405.77,-786.55 405.77,-786.55 405.77,-637.15 405.77,-637.15 405.77,-631.15 411.77,-625.15 417.77,-625.15"/>
-<text xml:space="preserve" text-anchor="middle" x="536.39" y="-786" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#3fb950">Workers — ARM64 &#160;(label: kubernetes.io/arch=arm64)</text>
+<path fill="#0d1f10" stroke="#3fb950" d="M553.77,-648.9C553.77,-648.9 905.77,-648.9 905.77,-648.9 911.77,-648.9 917.77,-654.9 917.77,-660.9 917.77,-660.9 917.77,-810.3 917.77,-810.3 917.77,-816.3 911.77,-822.3 905.77,-822.3 905.77,-822.3 553.77,-822.3 553.77,-822.3 547.77,-822.3 541.77,-816.3 541.77,-810.3 541.77,-810.3 541.77,-660.9 541.77,-660.9 541.77,-654.9 547.77,-648.9 553.77,-648.9"/>
+<text xml:space="preserve" text-anchor="middle" x="672.39" y="-809.75" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#3fb950">Workers — ARM64 &#160;(label: kubernetes.io/arch=arm64)</text>
 </g>
 <g id="clust4" class="cluster">
 <title>cluster_x86wk</title>
-<path fill="#0d1f2d" stroke="#58a6ff" d="M919.77,-625.15C919.77,-625.15 1233.79,-625.15 1233.79,-625.15 1239.79,-625.15 1245.79,-631.15 1245.79,-637.15 1245.79,-637.15 1245.79,-786.55 1245.79,-786.55 1245.79,-792.55 1239.79,-798.55 1233.79,-798.55 1233.79,-798.55 919.77,-798.55 919.77,-798.55 913.77,-798.55 907.77,-792.55 907.77,-786.55 907.77,-786.55 907.77,-637.15 907.77,-637.15 907.77,-631.15 913.77,-625.15 919.77,-625.15"/>
-<text xml:space="preserve" text-anchor="middle" x="1036.19" y="-786" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#58a6ff">Workers — AMD64 &#160;(taint: arch=amd64:NoSchedule)</text>
+<path fill="#0d1f2d" stroke="#58a6ff" d="M1055.79,-648.9C1055.79,-648.9 1369.79,-648.9 1369.79,-648.9 1375.79,-648.9 1381.79,-654.9 1381.79,-660.9 1381.79,-660.9 1381.79,-810.3 1381.79,-810.3 1381.79,-816.3 1375.79,-822.3 1369.79,-822.3 1369.79,-822.3 1055.79,-822.3 1055.79,-822.3 1049.79,-822.3 1043.79,-816.3 1043.79,-810.3 1043.79,-810.3 1043.79,-660.9 1043.79,-660.9 1043.79,-654.9 1049.79,-648.9 1055.79,-648.9"/>
+<text xml:space="preserve" text-anchor="middle" x="1172.19" y="-809.75" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#58a6ff">Workers — AMD64 &#160;(taint: arch=amd64:NoSchedule)</text>
 </g>
 <g id="clust5" class="cluster">
 <title>cluster_sdn</title>
-<path fill="#0d1429" stroke="#c8b1f5" d="M535.77,-127.65C535.77,-127.65 861.77,-127.65 861.77,-127.65 867.77,-127.65 873.77,-133.65 873.77,-139.65 873.77,-139.65 873.77,-559.4 873.77,-559.4 873.77,-565.4 867.77,-571.4 861.77,-571.4 861.77,-571.4 535.77,-571.4 535.77,-571.4 529.77,-571.4 523.77,-565.4 523.77,-559.4 523.77,-559.4 523.77,-139.65 523.77,-139.65 523.77,-133.65 529.77,-127.65 535.77,-127.65"/>
-<text xml:space="preserve" text-anchor="middle" x="617.27" y="-558.85" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#c8b1f5">Cluster SDN — Flannel VXLAN Overlay</text>
+<path fill="#0d1429" stroke="#c8b1f5" d="M548.77,-127.65C548.77,-127.65 1046.79,-127.65 1046.79,-127.65 1052.79,-127.65 1058.79,-133.65 1058.79,-139.65 1058.79,-139.65 1058.79,-593.15 1058.79,-593.15 1058.79,-599.15 1052.79,-605.15 1046.79,-605.15 1046.79,-605.15 548.77,-605.15 548.77,-605.15 542.77,-605.15 536.77,-599.15 536.77,-593.15 536.77,-593.15 536.77,-139.65 536.77,-139.65 536.77,-133.65 542.77,-127.65 548.77,-127.65"/>
+<text xml:space="preserve" text-anchor="middle" x="630.27" y="-592.6" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#c8b1f5">Cluster SDN — Flannel VXLAN Overlay</text>
 </g>
 <g id="clust6" class="cluster">
 <title>cluster_sc</title>
-<path fill="#0d1b2a" stroke="#79c0ff" d="M896.77,-463.93C896.77,-463.93 1265.79,-463.93 1265.79,-463.93 1271.79,-463.93 1277.79,-469.93 1277.79,-475.93 1277.79,-475.93 1277.79,-535.33 1277.79,-535.33 1277.79,-541.33 1271.79,-547.33 1265.79,-547.33 1265.79,-547.33 896.77,-547.33 896.77,-547.33 890.77,-547.33 884.77,-541.33 884.77,-535.33 884.77,-535.33 884.77,-475.93 884.77,-475.93 884.77,-469.93 890.77,-463.93 896.77,-463.93"/>
-<text xml:space="preserve" text-anchor="middle" x="965.14" y="-534.78" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#79c0ff">Storage Classes — PVC Bindings</text>
+<path fill="#0d1b2a" stroke="#79c0ff" d="M1101.79,-486.43C1101.79,-486.43 1470.79,-486.43 1470.79,-486.43 1476.79,-486.43 1482.79,-492.43 1482.79,-498.43 1482.79,-498.43 1482.79,-557.83 1482.79,-557.83 1482.79,-563.83 1476.79,-569.83 1470.79,-569.83 1470.79,-569.83 1101.79,-569.83 1101.79,-569.83 1095.79,-569.83 1089.79,-563.83 1089.79,-557.83 1089.79,-557.83 1089.79,-498.43 1089.79,-498.43 1089.79,-492.43 1095.79,-486.43 1101.79,-486.43"/>
+<text xml:space="preserve" text-anchor="middle" x="1170.19" y="-557.28" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#79c0ff">Storage Classes — PVC Bindings</text>
 </g>
 <!-- inet_client -->
 <g id="node1" class="node">
 <title>inet_client</title>
-<path fill="#1c2128" stroke="#30363d" stroke-width="1.5" d="M881.45,-1242.1C881.45,-1242.1 808.1,-1242.1 808.1,-1242.1 802.1,-1242.1 796.1,-1236.1 796.1,-1230.1 796.1,-1230.1 796.1,-1218.1 796.1,-1218.1 796.1,-1212.1 802.1,-1206.1 808.1,-1206.1 808.1,-1206.1 881.45,-1206.1 881.45,-1206.1 887.45,-1206.1 893.45,-1212.1 893.45,-1218.1 893.45,-1218.1 893.45,-1230.1 893.45,-1230.1 893.45,-1236.1 887.45,-1242.1 881.45,-1242.1"/>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-1221.17" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Clients / Internet</text>
+<path fill="#1c2128" stroke="#30363d" stroke-width="1.5" d="M1017.45,-1265.9C1017.45,-1265.9 944.1,-1265.9 944.1,-1265.9 938.1,-1265.9 932.1,-1259.9 932.1,-1253.9 932.1,-1253.9 932.1,-1241.9 932.1,-1241.9 932.1,-1235.9 938.1,-1229.9 944.1,-1229.9 944.1,-1229.9 1017.45,-1229.9 1017.45,-1229.9 1023.45,-1229.9 1029.45,-1235.9 1029.45,-1241.9 1029.45,-1241.9 1029.45,-1253.9 1029.45,-1253.9 1029.45,-1259.9 1023.45,-1265.9 1017.45,-1265.9"/>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-1244.98" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Clients / Internet</text>
 </g>
 <!-- haproxy -->
 <g id="node2" class="node">
 <title>haproxy</title>
-<path fill="#0a1f0e" stroke="#3fb950" stroke-width="1.5" d="M914.83,-1128.33C914.83,-1128.33 774.72,-1128.33 774.72,-1128.33 768.72,-1128.33 762.72,-1122.33 762.72,-1116.33 762.72,-1116.33 762.72,-1087.67 762.72,-1087.67 762.72,-1081.67 768.72,-1075.67 774.72,-1075.67 774.72,-1075.67 914.83,-1075.67 914.83,-1075.67 920.83,-1075.67 926.83,-1081.67 926.83,-1087.67 926.83,-1087.67 926.83,-1116.33 926.83,-1116.33 926.83,-1122.33 920.83,-1128.33 914.83,-1128.33"/>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-1111.62" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#e6edf3">HAProxy + Keepalived</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-1098.88" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#e6edf3">VIP 10.10.20.100</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-1086.12" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#e6edf3">K8s API :6443 &#160;L7 HTTPS :443</text>
+<path fill="#0a1f0e" stroke="#3fb950" stroke-width="1.5" d="M1050.83,-1152.12C1050.83,-1152.12 910.72,-1152.12 910.72,-1152.12 904.72,-1152.12 898.72,-1146.12 898.72,-1140.12 898.72,-1140.12 898.72,-1111.47 898.72,-1111.47 898.72,-1105.47 904.72,-1099.47 910.72,-1099.47 910.72,-1099.47 1050.83,-1099.47 1050.83,-1099.47 1056.83,-1099.47 1062.83,-1105.47 1062.83,-1111.47 1062.83,-1111.47 1062.83,-1140.12 1062.83,-1140.12 1062.83,-1146.12 1056.83,-1152.12 1050.83,-1152.12"/>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-1135.42" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#e6edf3">HAProxy + Keepalived</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-1122.67" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#e6edf3">VIP 10.10.20.100</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-1109.92" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#e6edf3">K8s API :6443 &#160;L7 HTTPS :443</text>
 </g>
 <!-- inet_client&#45;&gt;haproxy -->
 <g id="edge1" class="edge">
 <title>inet_client&#45;&gt;haproxy</title>
-<path fill="none" stroke="#444c56" stroke-width="1.1" d="M848.65,-1205.6C851.98,-1187.5 851.82,-1175.6 848.19,-1136.9"/>
-<polygon fill="#444c56" stroke="#444c56" stroke-width="1.1" points="850.46,-1136.71 847.57,-1130.46 845.93,-1137.15 850.46,-1136.71"/>
-<text xml:space="preserve" text-anchor="middle" x="870.64" y="-1164.48" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">:443 / :6443</text>
+<path fill="none" stroke="#444c56" stroke-width="1.1" d="M985.13,-1229.1C988.86,-1210.9 988.7,-1199 984.64,-1160.8"/>
+<polygon fill="#444c56" stroke="#444c56" stroke-width="1.1" points="986.92,-1160.67 983.96,-1154.46 982.4,-1161.16 986.92,-1160.67"/>
+<text xml:space="preserve" text-anchor="middle" x="1006.64" y="-1188.28" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">:443 / :6443</text>
 </g>
 <!-- mmcp -->
 <g id="node6" class="node">
 <title>mmcp</title>
-<path fill="#122d1a" stroke="#3fb950" stroke-width="1.5" d="M914.83,-986.95C914.83,-986.95 774.72,-986.95 774.72,-986.95 768.72,-986.95 762.72,-980.95 762.72,-974.95 762.72,-974.95 762.72,-872.05 762.72,-872.05 762.72,-866.05 768.72,-860.05 774.72,-860.05 774.72,-860.05 914.83,-860.05 914.83,-860.05 920.83,-860.05 926.83,-866.05 926.83,-872.05 926.83,-872.05 926.83,-974.95 926.83,-974.95 926.83,-980.95 920.83,-986.95 914.83,-986.95"/>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-971.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">mm&#45;cp &#160;ARM64</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-959.95" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">VLAN 20: 10.10.0.10</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-948.7" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">TB4 mesh: 192.168.100.1</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-937.45" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-926.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">k3s server</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-914.95" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">etcd &#160;embedded &#160;single&#45;node</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-903.7" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">kube&#45;apiserver &#160;kube&#45;scheduler</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-892.45" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">kube&#45;controller&#45;manager</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-881.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">flannel VXLAN agent</text>
-<text xml:space="preserve" text-anchor="middle" x="844.77" y="-869.95" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">CoreDNS &#160;:53</text>
+<path fill="#122d1a" stroke="#3fb950" stroke-width="1.5" d="M1050.83,-1010.7C1050.83,-1010.7 910.72,-1010.7 910.72,-1010.7 904.72,-1010.7 898.72,-1004.7 898.72,-998.7 898.72,-998.7 898.72,-895.8 898.72,-895.8 898.72,-889.8 904.72,-883.8 910.72,-883.8 910.72,-883.8 1050.83,-883.8 1050.83,-883.8 1056.83,-883.8 1062.83,-889.8 1062.83,-895.8 1062.83,-895.8 1062.83,-998.7 1062.83,-998.7 1062.83,-1004.7 1056.83,-1010.7 1050.83,-1010.7"/>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-994.95" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">mm&#45;cp &#160;ARM64</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-983.7" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">VLAN 20: 10.10.0.10</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-972.45" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">TB4 mesh: 192.168.100.1</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-961.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-949.95" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">k3s server</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-938.7" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">etcd &#160;embedded &#160;single&#45;node</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-927.45" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">kube&#45;apiserver &#160;kube&#45;scheduler</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-916.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">kube&#45;controller&#45;manager</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-904.95" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">flannel VXLAN agent</text>
+<text xml:space="preserve" text-anchor="middle" x="980.77" y="-893.7" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">CoreDNS &#160;:53</text>
 </g>
 <!-- haproxy&#45;&gt;mmcp -->
 <g id="edge3" class="edge">
 <title>haproxy&#45;&gt;mmcp</title>
-<path fill="none" stroke="#3fb950" stroke-width="2.5" d="M851.99,-1075.1C857.62,-1051.7 858.33,-1035.8 854.11,-997.16"/>
-<polygon fill="#3fb950" stroke="#3fb950" stroke-width="2.5" points="856.43,-997.37 853.43,-991.17 851.91,-997.89 856.43,-997.37"/>
-<text xml:space="preserve" text-anchor="middle" x="887.52" y="-1034.15" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">API :6443</text>
-<text xml:space="preserve" text-anchor="middle" x="887.52" y="-1024.4" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">VRRP load&#45;balanced</text>
+<path fill="none" stroke="#3fb950" stroke-width="2.5" d="M988.67,-1098.7C994.9,-1075 995.73,-1059.2 991.18,-1021.3"/>
+<polygon fill="#3fb950" stroke="#3fb950" stroke-width="2.5" points="993.46,-1021.12 990.39,-1014.95 988.94,-1021.69 993.46,-1021.12"/>
+<text xml:space="preserve" text-anchor="middle" x="1023.49" y="-1057.85" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">API :6443</text>
+<text xml:space="preserve" text-anchor="middle" x="1023.49" y="-1048.1" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">VRRP load&#45;balanced</text>
 </g>
 <!-- ext_stor -->
 <g id="node3" class="node">
 <title>ext_stor</title>
-<path fill="#0d1b2a" stroke="#79c0ff" stroke-width="1.5" d="M1196.09,-330.65C1196.09,-330.65 1003.49,-330.65 1003.49,-330.65 997.49,-330.65 991.49,-324.65 991.49,-318.65 991.49,-318.65 991.49,-283.25 991.49,-283.25 991.49,-277.25 997.49,-271.25 1003.49,-271.25 1003.49,-271.25 1196.09,-271.25 1196.09,-271.25 1202.09,-271.25 1208.09,-277.25 1208.09,-283.25 1208.09,-283.25 1208.09,-318.65 1208.09,-318.65 1208.09,-324.65 1202.09,-330.65 1196.09,-330.65"/>
-<text xml:space="preserve" text-anchor="middle" x="1099.79" y="-314.9" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Storage Backends</text>
-<text xml:space="preserve" text-anchor="middle" x="1099.79" y="-303.65" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">NFS &#160;10.10.30.10 &#160;(RWX &#160;NFSv4.1)</text>
-<text xml:space="preserve" text-anchor="middle" x="1099.79" y="-292.4" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">iSCSI &#160;10.10.30.20 &#160;(RWO &#160;LVM&#45;thin &#160;MPIO)</text>
-<text xml:space="preserve" text-anchor="middle" x="1099.79" y="-281.15" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Ceph on Proxmox &#160;(RWO)</text>
+<path fill="#0d1b2a" stroke="#79c0ff" stroke-width="1.5" d="M1401.09,-341.9C1401.09,-341.9 1208.49,-341.9 1208.49,-341.9 1202.49,-341.9 1196.49,-335.9 1196.49,-329.9 1196.49,-329.9 1196.49,-294.5 1196.49,-294.5 1196.49,-288.5 1202.49,-282.5 1208.49,-282.5 1208.49,-282.5 1401.09,-282.5 1401.09,-282.5 1407.09,-282.5 1413.09,-288.5 1413.09,-294.5 1413.09,-294.5 1413.09,-329.9 1413.09,-329.9 1413.09,-335.9 1407.09,-341.9 1401.09,-341.9"/>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-326.15" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Storage Backends</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-314.9" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">NFS &#160;10.10.30.10 &#160;(RWX &#160;NFSv4.1)</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-303.65" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">iSCSI &#160;10.10.30.20 &#160;(RWO &#160;LVM&#45;thin &#160;MPIO)</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-292.4" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Ceph on Proxmox &#160;(RWO)</text>
 </g>
 <!-- ext_id -->
 <g id="node4" class="node">
 <title>ext_id</title>
-<path fill="#1c1429" stroke="#c8b1f5" stroke-width="1.5" d="M1129.85,-48.15C1129.85,-48.15 1025.74,-48.15 1025.74,-48.15 1019.74,-48.15 1013.74,-42.15 1013.74,-36.15 1013.74,-36.15 1013.74,-12 1013.74,-12 1013.74,-6 1019.74,0 1025.74,0 1025.74,0 1129.85,0 1129.85,0 1135.85,0 1141.85,-6 1141.85,-12 1141.85,-12 1141.85,-36.15 1141.85,-36.15 1141.85,-42.15 1135.85,-48.15 1129.85,-48.15"/>
-<text xml:space="preserve" text-anchor="middle" x="1077.79" y="-32.4" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">FreeIPA &#160;10.10.10.6</text>
-<text xml:space="preserve" text-anchor="middle" x="1077.79" y="-21.15" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">LDAP · Kerberos · DNS</text>
-<text xml:space="preserve" text-anchor="middle" x="1077.79" y="-9.9" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">SSSD on all Linux hosts</text>
+<path fill="#1c1429" stroke="#c8b1f5" stroke-width="1.5" d="M1322.85,-48.15C1322.85,-48.15 1218.74,-48.15 1218.74,-48.15 1212.74,-48.15 1206.74,-42.15 1206.74,-36.15 1206.74,-36.15 1206.74,-12 1206.74,-12 1206.74,-6 1212.74,0 1218.74,0 1218.74,0 1322.85,0 1322.85,0 1328.85,0 1334.85,-6 1334.85,-12 1334.85,-12 1334.85,-36.15 1334.85,-36.15 1334.85,-42.15 1328.85,-48.15 1322.85,-48.15"/>
+<text xml:space="preserve" text-anchor="middle" x="1270.79" y="-32.4" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">FreeIPA &#160;10.10.10.6</text>
+<text xml:space="preserve" text-anchor="middle" x="1270.79" y="-21.15" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">LDAP · Kerberos · DNS</text>
+<text xml:space="preserve" text-anchor="middle" x="1270.79" y="-9.9" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">SSSD on all Linux hosts</text>
 </g>
 <!-- ext_id&#45;&gt;mmcp -->
 <g id="edge19" class="edge">
 <title>ext_id&#45;&gt;mmcp</title>
-<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M894.7,-859.36C1113.59,-576.55 1115.99,-538.59 1080.19,-56.46"/>
-<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="1082.49,-56.58 1079.72,-50.27 1077.95,-56.93 1082.49,-56.58"/>
-<text xml:space="preserve" text-anchor="middle" x="1374.89" y="-395" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">SSSD / Kerberos</text>
-<text xml:space="preserve" text-anchor="middle" x="1374.89" y="-385.25" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">host auth</text>
+<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M1035.39,-883.18C1289.79,-583.25 1293.89,-546.14 1272.19,-56.85"/>
+<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="1274.48,-56.96 1271.96,-50.55 1269.93,-57.13 1274.48,-56.96"/>
+<text xml:space="preserve" text-anchor="middle" x="1579.89" y="-417.5" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">SSSD / Kerberos</text>
+<text xml:space="preserve" text-anchor="middle" x="1579.89" y="-407.75" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">host auth</text>
 </g>
 <!-- ext_ad -->
 <g id="node5" class="node">
 <title>ext_ad</title>
-<path fill="#1c1429" stroke="#c8b1f5" stroke-width="1.5" d="M1141.1,-178.18C1141.1,-178.18 1014.49,-178.18 1014.49,-178.18 1008.49,-178.18 1002.49,-172.18 1002.49,-166.18 1002.49,-166.18 1002.49,-153.28 1002.49,-153.28 1002.49,-147.28 1008.49,-141.28 1014.49,-141.28 1014.49,-141.28 1141.1,-141.28 1141.1,-141.28 1147.1,-141.28 1153.1,-147.28 1153.1,-153.28 1153.1,-153.28 1153.1,-166.18 1153.1,-166.18 1153.1,-172.18 1147.1,-178.18 1141.1,-178.18"/>
-<text xml:space="preserve" text-anchor="middle" x="1077.79" y="-162.43" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Active Directory &#160;10.10.10.5</text>
-<text xml:space="preserve" text-anchor="middle" x="1077.79" y="-151.18" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">lab.local &#160;WinSrv 2022</text>
+<path fill="#1c1429" stroke="#c8b1f5" stroke-width="1.5" d="M1334.1,-178.18C1334.1,-178.18 1207.49,-178.18 1207.49,-178.18 1201.49,-178.18 1195.49,-172.18 1195.49,-166.18 1195.49,-166.18 1195.49,-153.28 1195.49,-153.28 1195.49,-147.28 1201.49,-141.28 1207.49,-141.28 1207.49,-141.28 1334.1,-141.28 1334.1,-141.28 1340.1,-141.28 1346.1,-147.28 1346.1,-153.28 1346.1,-153.28 1346.1,-166.18 1346.1,-166.18 1346.1,-172.18 1340.1,-178.18 1334.1,-178.18"/>
+<text xml:space="preserve" text-anchor="middle" x="1270.79" y="-162.43" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Active Directory &#160;10.10.10.5</text>
+<text xml:space="preserve" text-anchor="middle" x="1270.79" y="-151.18" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">lab.local &#160;WinSrv 2022</text>
 </g>
 <!-- ext_ad&#45;&gt;ext_id -->
 <g id="edge2" class="edge">
 <title>ext_ad&#45;&gt;ext_id</title>
-<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M1081.39,-140.9C1090.59,-92.67 1092.89,-75.97 1088.39,-56.3"/>
-<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="1090.62,-55.83 1086.73,-50.15 1086.23,-57.02 1090.62,-55.83"/>
-<text xml:space="preserve" text-anchor="middle" x="1114.19" y="-89.18" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">cross&#45;realm trust</text>
+<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M1274.79,-140.78C1284.99,-93.2 1287.39,-76.9 1282.19,-56.6"/>
+<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="1284.42,-56.11 1280.45,-50.48 1280.04,-57.35 1284.42,-56.11"/>
+<text xml:space="preserve" text-anchor="middle" x="1307.19" y="-89.18" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">cross&#45;realm trust</text>
 </g>
 <!-- mmw1 -->
 <g id="node7" class="node">
 <title>mmw1</title>
-<path fill="#122d1a" stroke="#3fb950" stroke-width="1.5" d="M558.07,-771.31C558.07,-771.31 425.47,-771.31 425.47,-771.31 419.47,-771.31 413.47,-765.31 413.47,-759.31 413.47,-759.31 413.47,-645.15 413.47,-645.15 413.47,-639.15 419.47,-633.15 425.47,-633.15 425.47,-633.15 558.07,-633.15 558.07,-633.15 564.07,-633.15 570.07,-639.15 570.07,-645.15 570.07,-645.15 570.07,-759.31 570.07,-759.31 570.07,-765.31 564.07,-771.31 558.07,-771.31"/>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-755.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">mm&#45;w1 &#160;ARM64</text>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-744.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">10.10.0.11 &#160;/ &#160;192.168.100.2</text>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-733.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-721.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">k3s agent &#160;containerd</text>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-710.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">QEMU binfmt (x86 emul)</text>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-699.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">flannel VXLAN</text>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-688.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-676.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Workloads:</text>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-665.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Prometheus + Grafana</text>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-654.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Keycloak SSO</text>
-<text xml:space="preserve" text-anchor="middle" x="491.77" y="-643.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">step&#45;ca PKI</text>
+<path fill="#122d1a" stroke="#3fb950" stroke-width="1.5" d="M694.07,-795.06C694.07,-795.06 561.47,-795.06 561.47,-795.06 555.47,-795.06 549.47,-789.06 549.47,-783.06 549.47,-783.06 549.47,-668.9 549.47,-668.9 549.47,-662.9 555.47,-656.9 561.47,-656.9 561.47,-656.9 694.07,-656.9 694.07,-656.9 700.07,-656.9 706.07,-662.9 706.07,-668.9 706.07,-668.9 706.07,-783.06 706.07,-783.06 706.07,-789.06 700.07,-795.06 694.07,-795.06"/>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-779.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">mm&#45;w1 &#160;ARM64</text>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-768.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">10.10.0.11 &#160;/ &#160;192.168.100.2</text>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-756.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-745.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">k3s agent &#160;containerd</text>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-734.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">QEMU binfmt (x86 emul)</text>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-723.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">flannel VXLAN</text>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-711.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-700.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Workloads:</text>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-689.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Prometheus + Grafana</text>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-678.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Keycloak SSO</text>
+<text xml:space="preserve" text-anchor="middle" x="627.77" y="-666.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">step&#45;ca PKI</text>
 </g>
 <!-- mmcp&#45;&gt;mmw1 -->
 <g id="edge4" class="edge">
 <title>mmcp&#45;&gt;mmw1</title>
-<path fill="none" stroke="#3fb950" stroke-width="1.1" d="M762.12,-910.25C666.08,-892.61 634,-871.79 554.28,-777.81"/>
-<polygon fill="#3fb950" stroke="#3fb950" stroke-width="1.1" points="556.22,-776.58 550.29,-773.08 552.75,-779.51 556.22,-776.58"/>
-<text xml:space="preserve" text-anchor="middle" x="568.27" y="-818.45" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">kubelet :10250</text>
-<text xml:space="preserve" text-anchor="middle" x="568.27" y="-808.7" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">VLAN 20</text>
+<path fill="none" stroke="#3fb950" stroke-width="1.1" d="M898.3,-934.02C801.71,-916.31 769.65,-895.56 690.13,-801.58"/>
+<polygon fill="#3fb950" stroke="#3fb950" stroke-width="1.1" points="692.08,-800.35 686.15,-796.85 688.6,-803.29 692.08,-800.35"/>
+<text xml:space="preserve" text-anchor="middle" x="704.27" y="-842.2" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">kubelet :10250</text>
+<text xml:space="preserve" text-anchor="middle" x="704.27" y="-832.45" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">VLAN 20</text>
 </g>
 <!-- mmw2 -->
 <g id="node8" class="node">
 <title>mmw2</title>
-<path fill="#122d1a" stroke="#3fb950" stroke-width="1.5" d="M762.07,-771.31C762.07,-771.31 629.47,-771.31 629.47,-771.31 623.47,-771.31 617.47,-765.31 617.47,-759.31 617.47,-759.31 617.47,-645.15 617.47,-645.15 617.47,-639.15 623.47,-633.15 629.47,-633.15 629.47,-633.15 762.07,-633.15 762.07,-633.15 768.07,-633.15 774.07,-639.15 774.07,-645.15 774.07,-645.15 774.07,-759.31 774.07,-759.31 774.07,-765.31 768.07,-771.31 762.07,-771.31"/>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-755.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">mm&#45;w2 &#160;ARM64</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-744.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">10.10.0.12 &#160;/ &#160;192.168.100.3</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-733.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-721.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">k3s agent &#160;containerd</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-710.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">QEMU binfmt (x86 emul)</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-699.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">flannel VXLAN</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-688.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-676.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Workloads:</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-665.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Logstash</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-654.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Filebeat DaemonSet</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-643.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">MinIO client ops</text>
+<path fill="#122d1a" stroke="#3fb950" stroke-width="1.5" d="M898.07,-795.06C898.07,-795.06 765.47,-795.06 765.47,-795.06 759.47,-795.06 753.47,-789.06 753.47,-783.06 753.47,-783.06 753.47,-668.9 753.47,-668.9 753.47,-662.9 759.47,-656.9 765.47,-656.9 765.47,-656.9 898.07,-656.9 898.07,-656.9 904.07,-656.9 910.07,-662.9 910.07,-668.9 910.07,-668.9 910.07,-783.06 910.07,-783.06 910.07,-789.06 904.07,-795.06 898.07,-795.06"/>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-779.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">mm&#45;w2 &#160;ARM64</text>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-768.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">10.10.0.12 &#160;/ &#160;192.168.100.3</text>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-756.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-745.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">k3s agent &#160;containerd</text>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-734.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">QEMU binfmt (x86 emul)</text>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-723.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">flannel VXLAN</text>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-711.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-700.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Workloads:</text>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-689.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Logstash</text>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-678.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Filebeat DaemonSet</text>
+<text xml:space="preserve" text-anchor="middle" x="831.77" y="-666.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">MinIO client ops</text>
 </g>
 <!-- mmcp&#45;&gt;mmw2 -->
 <g id="edge5" class="edge">
 <title>mmcp&#45;&gt;mmw2</title>
-<path fill="none" stroke="#3fb950" stroke-width="1.1" d="M772.4,-859.35C759.13,-841.33 747.03,-817.86 729.64,-779.37"/>
-<polygon fill="#3fb950" stroke="#3fb950" stroke-width="1.1" points="731.76,-778.52 727.02,-773.52 727.6,-780.38 731.76,-778.52"/>
-<text xml:space="preserve" text-anchor="middle" x="756.27" y="-813.57" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">kubelet :10250</text>
+<path fill="none" stroke="#3fb950" stroke-width="1.1" d="M907.92,-883.07C894.64,-865.05 882.6,-841.58 865.34,-803.1"/>
+<polygon fill="#3fb950" stroke="#3fb950" stroke-width="1.1" points="867.46,-802.26 862.74,-797.25 863.31,-804.11 867.46,-802.26"/>
+<text xml:space="preserve" text-anchor="middle" x="892.27" y="-837.32" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">kubelet :10250</text>
 </g>
 <!-- x86w1 -->
 <g id="node9" class="node">
 <title>x86w1</title>
-<path fill="#0c2a3d" stroke="#58a6ff" stroke-width="1.5" d="M1225.35,-765.68C1225.35,-765.68 1112.24,-765.68 1112.24,-765.68 1106.24,-765.68 1100.24,-759.68 1100.24,-753.68 1100.24,-753.68 1100.24,-650.78 1100.24,-650.78 1100.24,-644.78 1106.24,-638.78 1112.24,-638.78 1112.24,-638.78 1225.35,-638.78 1225.35,-638.78 1231.35,-638.78 1237.35,-644.78 1237.35,-650.78 1237.35,-650.78 1237.35,-753.68 1237.35,-753.68 1237.35,-759.68 1231.35,-765.68 1225.35,-765.68"/>
-<text xml:space="preserve" text-anchor="middle" x="1168.79" y="-749.93" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">x86&#45;w1 &#160;AMD64</text>
-<text xml:space="preserve" text-anchor="middle" x="1168.79" y="-738.68" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">10.10.0.20 &#160;VLAN 20</text>
-<text xml:space="preserve" text-anchor="middle" x="1168.79" y="-727.43" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
-<text xml:space="preserve" text-anchor="middle" x="1168.79" y="-716.18" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">k3s agent &#160;containerd</text>
-<text xml:space="preserve" text-anchor="middle" x="1168.79" y="-704.93" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">QEMU binfmt (ARM emul)</text>
-<text xml:space="preserve" text-anchor="middle" x="1168.79" y="-693.68" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">flannel VXLAN</text>
-<text xml:space="preserve" text-anchor="middle" x="1168.79" y="-682.43" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
-<text xml:space="preserve" text-anchor="middle" x="1168.79" y="-671.18" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Workloads:</text>
-<text xml:space="preserve" text-anchor="middle" x="1168.79" y="-659.93" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">MariaDB Galera node&#45;1</text>
-<text xml:space="preserve" text-anchor="middle" x="1168.79" y="-648.68" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Elasticsearch node&#45;1</text>
+<path fill="#0c2a3d" stroke="#58a6ff" stroke-width="1.5" d="M1361.35,-789.43C1361.35,-789.43 1248.24,-789.43 1248.24,-789.43 1242.24,-789.43 1236.24,-783.43 1236.24,-777.43 1236.24,-777.43 1236.24,-674.53 1236.24,-674.53 1236.24,-668.53 1242.24,-662.53 1248.24,-662.53 1248.24,-662.53 1361.35,-662.53 1361.35,-662.53 1367.35,-662.53 1373.35,-668.53 1373.35,-674.53 1373.35,-674.53 1373.35,-777.43 1373.35,-777.43 1373.35,-783.43 1367.35,-789.43 1361.35,-789.43"/>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-773.68" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">x86&#45;w1 &#160;AMD64</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-762.43" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">10.10.0.20 &#160;VLAN 20</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-751.18" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-739.93" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">k3s agent &#160;containerd</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-728.68" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">QEMU binfmt (ARM emul)</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-717.43" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">flannel VXLAN</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-706.18" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-694.93" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Workloads:</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-683.68" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">MariaDB Galera node&#45;1</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-672.43" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Elasticsearch node&#45;1</text>
 </g>
 <!-- mmcp&#45;&gt;x86w1 -->
 <g id="edge6" class="edge">
 <title>mmcp&#45;&gt;x86w1</title>
-<path fill="none" stroke="#58a6ff" stroke-width="1.1" d="M927.56,-906.54C1017.49,-885.77 1046.69,-864.19 1116.39,-772.73"/>
-<polygon fill="#58a6ff" stroke="#58a6ff" stroke-width="1.1" points="1118.14,-774.19 1120.28,-767.64 1114.53,-771.43 1118.14,-774.19"/>
-<text xml:space="preserve" text-anchor="middle" x="1150.29" y="-818.45" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">kubelet :10250</text>
-<text xml:space="preserve" text-anchor="middle" x="1150.29" y="-808.7" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">VLAN 20</text>
+<path fill="none" stroke="#58a6ff" stroke-width="1.1" d="M1063.29,-930.42C1152.39,-909.89 1181.59,-888.19 1252.09,-796.29"/>
+<polygon fill="#58a6ff" stroke="#58a6ff" stroke-width="1.1" points="1253.87,-797.72 1255.99,-791.17 1250.24,-794.97 1253.87,-797.72"/>
+<text xml:space="preserve" text-anchor="middle" x="1286.29" y="-842.2" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">kubelet :10250</text>
+<text xml:space="preserve" text-anchor="middle" x="1286.29" y="-832.45" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">VLAN 20</text>
 </g>
 <!-- x86w2 -->
 <g id="node10" class="node">
 <title>x86w2</title>
-<path fill="#0c2a3d" stroke="#58a6ff" stroke-width="1.5" d="M1041.33,-771.31C1041.33,-771.31 928.22,-771.31 928.22,-771.31 922.22,-771.31 916.22,-765.31 916.22,-759.31 916.22,-759.31 916.22,-645.15 916.22,-645.15 916.22,-639.15 922.22,-633.15 928.22,-633.15 928.22,-633.15 1041.33,-633.15 1041.33,-633.15 1047.33,-633.15 1053.33,-639.15 1053.33,-645.15 1053.33,-645.15 1053.33,-759.31 1053.33,-759.31 1053.33,-765.31 1047.33,-771.31 1041.33,-771.31"/>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-755.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">x86&#45;w2 &#160;AMD64</text>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-744.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">10.10.0.21 &#160;VLAN 20</text>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-733.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-721.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">k3s agent &#160;containerd</text>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-710.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">QEMU binfmt (ARM emul)</text>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-699.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">flannel VXLAN</text>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-688.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-676.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Workloads:</text>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-665.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">MariaDB Galera node&#45;2</text>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-654.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Elasticsearch node&#45;2</text>
-<text xml:space="preserve" text-anchor="middle" x="984.77" y="-643.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Kibana</text>
+<path fill="#0c2a3d" stroke="#58a6ff" stroke-width="1.5" d="M1177.35,-795.06C1177.35,-795.06 1064.24,-795.06 1064.24,-795.06 1058.24,-795.06 1052.24,-789.06 1052.24,-783.06 1052.24,-783.06 1052.24,-668.9 1052.24,-668.9 1052.24,-662.9 1058.24,-656.9 1064.24,-656.9 1064.24,-656.9 1177.35,-656.9 1177.35,-656.9 1183.35,-656.9 1189.35,-662.9 1189.35,-668.9 1189.35,-668.9 1189.35,-783.06 1189.35,-783.06 1189.35,-789.06 1183.35,-795.06 1177.35,-795.06"/>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-779.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">x86&#45;w2 &#160;AMD64</text>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-768.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">10.10.0.21 &#160;VLAN 20</text>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-756.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-745.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">k3s agent &#160;containerd</text>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-734.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">QEMU binfmt (ARM emul)</text>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-723.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">flannel VXLAN</text>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-711.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">─────────────</text>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-700.56" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Workloads:</text>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-689.31" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">MariaDB Galera node&#45;2</text>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-678.06" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Elasticsearch node&#45;2</text>
+<text xml:space="preserve" text-anchor="middle" x="1120.79" y="-666.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Kibana</text>
 </g>
 <!-- mmcp&#45;&gt;x86w2 -->
 <g id="edge7" class="edge">
 <title>mmcp&#45;&gt;x86w2</title>
-<path fill="none" stroke="#58a6ff" stroke-width="1.1" d="M916.76,-859.49C929.8,-841.33 940.65,-818 955.77,-779.31"/>
-<polygon fill="#58a6ff" stroke="#58a6ff" stroke-width="1.1" points="957.82,-780.34 958.04,-773.45 953.57,-778.69 957.82,-780.34"/>
-<text xml:space="preserve" text-anchor="middle" x="984.27" y="-813.57" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">kubelet :10250</text>
+<path fill="none" stroke="#58a6ff" stroke-width="1.1" d="M1052.29,-883.07C1065.19,-864.92 1076.09,-841.56 1091.39,-802.92"/>
+<polygon fill="#58a6ff" stroke="#58a6ff" stroke-width="1.1" points="1093.43,-803.95 1093.69,-797.07 1089.2,-802.29 1093.43,-803.95"/>
+<text xml:space="preserve" text-anchor="middle" x="1120.29" y="-837.32" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">kubelet :10250</text>
 </g>
 <!-- pod_net -->
 <g id="node11" class="node">
 <title>pod_net</title>
-<path fill="#1c1a2d" stroke="#c8b1f5" stroke-width="1.5" d="M839.2,-544.15C839.2,-544.15 615.95,-544.15 615.95,-544.15 609.95,-544.15 600.65,-539.14 597.34,-534.14 597.34,-534.14 546.96,-457.86 546.96,-457.86 543.66,-452.86 546.35,-447.85 552.35,-447.85 552.35,-447.85 775.6,-447.85 775.6,-447.85 781.6,-447.85 790.9,-452.86 794.21,-457.86 794.21,-457.86 844.59,-534.14 844.59,-534.14 847.89,-539.14 845.2,-544.15 839.2,-544.15"/>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-504.32" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Pod Network &#160;10.42.0.0/16</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-493.07" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Flannel VXLAN &#160;UDP :8472</text>
-<text xml:space="preserve" text-anchor="middle" x="695.77" y="-481.82" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">per&#45;node /24 slice</text>
+<path fill="#1c1a2d" stroke="#c8b1f5" stroke-width="1.5" d="M1047.61,-577.9C1047.61,-577.9 655.09,-577.9 655.09,-577.9 649.09,-577.9 639.07,-573.44 635.05,-568.99 635.05,-568.99 543.98,-468.01 543.98,-468.01 539.96,-463.56 541.94,-459.1 547.94,-459.1 547.94,-459.1 940.46,-459.1 940.46,-459.1 946.46,-459.1 956.48,-463.56 960.5,-468.01 960.5,-468.01 1051.57,-568.99 1051.57,-568.99 1055.59,-573.44 1053.61,-577.9 1047.61,-577.9"/>
+<text xml:space="preserve" text-anchor="middle" x="797.77" y="-532.45" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Pod Network &#160;DUAL&#45;STACK &#160;AD&#45;016</text>
+<text xml:space="preserve" text-anchor="middle" x="797.77" y="-521.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">10.42.0.0/16 &#160;+ &#160;fd42::/48</text>
+<text xml:space="preserve" text-anchor="middle" x="797.77" y="-509.95" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Flannel VXLAN &#160;UDP :8472 &#160;(IPv4) · :8473 &#160;(IPv6)</text>
+<text xml:space="preserve" text-anchor="middle" x="797.77" y="-498.7" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">per&#45;node /24 (v4) &#160;· &#160;per&#45;node /64 (v6)</text>
 </g>
 <!-- mmcp&#45;&gt;pod_net -->
 <g id="edge11" class="edge">
 <title>mmcp&#45;&gt;pod_net</title>
-<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M801.46,-859.45C759.7,-792.94 747.65,-745.98 707.49,-552.64"/>
-<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="709.76,-552.34 706.21,-546.44 705.3,-553.27 709.76,-552.34"/>
+<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M925.49,-883.2C874.04,-818.63 859.11,-771.67 814.13,-586.31"/>
+<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="816.38,-585.92 812.64,-580.14 811.96,-586.99 816.38,-585.92"/>
 </g>
 <!-- tbmesh -->
 <g id="node17" class="node">
 <title>tbmesh</title>
-<path fill="#0a1f0e" stroke="#3fb950" stroke-width="1.5" d="M495.55,-555.4C495.55,-555.4 115.85,-555.4 115.85,-555.4 109.85,-555.4 99.9,-550.88 95.95,-546.37 95.95,-546.37 7.9,-445.63 7.9,-445.63 3.95,-441.12 6,-436.6 12,-436.6 12,-436.6 391.7,-436.6 391.7,-436.6 397.7,-436.6 407.65,-441.12 411.6,-445.63 411.6,-445.63 499.65,-546.37 499.65,-546.37 503.6,-550.88 501.55,-555.4 495.55,-555.4"/>
-<text xml:space="preserve" text-anchor="middle" x="253.77" y="-509.95" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Thunderbolt 4 Mesh &#160;192.168.100.0/24</text>
-<text xml:space="preserve" text-anchor="middle" x="253.77" y="-498.7" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">40 Gb/s · MTU 9000 · point&#45;to&#45;point</text>
-<text xml:space="preserve" text-anchor="middle" x="253.77" y="-487.45" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">cp &lt;&#45;&gt; w1 · cp &lt;&#45;&gt; w2 · w1 &lt;&#45;&gt; w2</text>
-<text xml:space="preserve" text-anchor="middle" x="253.77" y="-476.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">etcd quorum · pod overlay · high&#45;BW intra&#45;ARM</text>
+<path fill="#0a1f0e" stroke="#3fb950" stroke-width="1.5" d="M495.55,-577.9C495.55,-577.9 115.85,-577.9 115.85,-577.9 109.85,-577.9 99.9,-573.38 95.95,-568.87 95.95,-568.87 7.9,-468.13 7.9,-468.13 3.95,-463.62 6,-459.1 12,-459.1 12,-459.1 391.7,-459.1 391.7,-459.1 397.7,-459.1 407.65,-463.62 411.6,-468.13 411.6,-468.13 499.65,-568.87 499.65,-568.87 503.6,-573.38 501.55,-577.9 495.55,-577.9"/>
+<text xml:space="preserve" text-anchor="middle" x="253.77" y="-532.45" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Thunderbolt 4 Mesh &#160;192.168.100.0/24</text>
+<text xml:space="preserve" text-anchor="middle" x="253.77" y="-521.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">40 Gb/s · MTU 9000 · point&#45;to&#45;point</text>
+<text xml:space="preserve" text-anchor="middle" x="253.77" y="-509.95" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">cp &lt;&#45;&gt; w1 · cp &lt;&#45;&gt; w2 · w1 &lt;&#45;&gt; w2</text>
+<text xml:space="preserve" text-anchor="middle" x="253.77" y="-498.7" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">etcd quorum · pod overlay · high&#45;BW intra&#45;ARM</text>
 </g>
 <!-- mmcp&#45;&gt;tbmesh -->
 <g id="edge8" class="edge">
 <title>mmcp&#45;&gt;tbmesh</title>
-<path fill="none" stroke="#3fb950" stroke-width="3" d="M762.07,-899.65C468.02,-814.05 431.84,-788.92 295.66,-565.41"/>
-<polygon fill="#3fb950" stroke="#3fb950" stroke-width="3" points="297.62,-564.25 292.3,-559.88 293.74,-566.62 297.62,-564.25"/>
+<path fill="none" stroke="#3fb950" stroke-width="3" d="M898.16,-928.5C516.29,-841.3 473.95,-819.4 303.59,-587.07"/>
+<polygon fill="#3fb950" stroke="#3fb950" stroke-width="3" points="305.58,-585.93 299.91,-582.03 301.91,-588.61 305.58,-585.93"/>
 </g>
 <!-- mmw1&#45;&gt;pod_net -->
 <g id="edge12" class="edge">
 <title>mmw1&#45;&gt;pod_net</title>
-<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M560.23,-632.44C578.71,-613.75 602.4,-589.89 641.86,-550.21"/>
-<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="643.13,-552.16 646.1,-545.95 639.9,-548.96 643.13,-552.16"/>
+<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M677.73,-656.35C691.69,-638.95 709.65,-618.12 739.24,-584.58"/>
+<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="740.8,-586.26 743.39,-579.88 737.39,-583.25 740.8,-586.26"/>
 </g>
 <!-- sc_nfs -->
 <g id="node14" class="node">
 <title>sc_nfs</title>
-<path fill="#0c2030" stroke="#79c0ff" stroke-width="1.5" d="M998.95,-520.08C998.95,-520.08 904.6,-520.08 904.6,-520.08 898.6,-520.08 892.6,-514.08 892.6,-508.08 892.6,-508.08 892.6,-483.93 892.6,-483.93 892.6,-477.93 898.6,-471.93 904.6,-471.93 904.6,-471.93 998.95,-471.93 998.95,-471.93 1004.95,-471.93 1010.95,-477.93 1010.95,-483.93 1010.95,-483.93 1010.95,-508.08 1010.95,-508.08 1010.95,-514.08 1004.95,-520.08 998.95,-520.08"/>
-<text xml:space="preserve" text-anchor="middle" x="951.77" y="-504.32" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">nfs&#45;client</text>
-<text xml:space="preserve" text-anchor="middle" x="951.77" y="-493.07" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">RWX</text>
-<text xml:space="preserve" text-anchor="middle" x="951.77" y="-481.82" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">nfs&#45;subdir&#45;provisioner</text>
+<path fill="#0c2030" stroke="#79c0ff" stroke-width="1.5" d="M1203.97,-542.58C1203.97,-542.58 1109.62,-542.58 1109.62,-542.58 1103.62,-542.58 1097.62,-536.58 1097.62,-530.58 1097.62,-530.58 1097.62,-506.43 1097.62,-506.43 1097.62,-500.43 1103.62,-494.43 1109.62,-494.43 1109.62,-494.43 1203.97,-494.43 1203.97,-494.43 1209.97,-494.43 1215.97,-500.43 1215.97,-506.43 1215.97,-506.43 1215.97,-530.58 1215.97,-530.58 1215.97,-536.58 1209.97,-542.58 1203.97,-542.58"/>
+<text xml:space="preserve" text-anchor="middle" x="1156.79" y="-526.83" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">nfs&#45;client</text>
+<text xml:space="preserve" text-anchor="middle" x="1156.79" y="-515.58" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">RWX</text>
+<text xml:space="preserve" text-anchor="middle" x="1156.79" y="-504.32" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">nfs&#45;subdir&#45;provisioner</text>
 </g>
 <!-- mmw1&#45;&gt;sc_nfs -->
 <g id="edge23" class="edge">
 <title>mmw1&#45;&gt;sc_nfs</title>
-<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M570.65,-670.43C779.84,-586.02 820.73,-568.34 900.67,-524.44"/>
-<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="901.46,-526.6 906.06,-521.47 899.27,-522.62 901.46,-526.6"/>
-<text xml:space="preserve" text-anchor="middle" x="590.27" y="-591.54" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">RWX PVCs</text>
+<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M706.82,-702.47C969.95,-624.07 1010.09,-609.41 1110.69,-547.36"/>
+<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1111.66,-549.44 1115.98,-544.08 1109.26,-545.57 1111.66,-549.44"/>
+<text xml:space="preserve" text-anchor="middle" x="727.27" y="-615.29" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">RWX PVCs</text>
 </g>
 <!-- mmw1&#45;&gt;tbmesh -->
 <g id="edge9" class="edge">
 <title>mmw1&#45;&gt;tbmesh</title>
-<path fill="none" stroke="#3fb950" stroke-width="3" d="M412.94,-655.01C347.2,-614.91 319.61,-594.5 296.63,-564.7"/>
-<polygon fill="#3fb950" stroke="#3fb950" stroke-width="3" points="298.62,-563.56 292.94,-559.68 294.96,-566.26 298.62,-563.56"/>
+<path fill="none" stroke="#3fb950" stroke-width="3" d="M548.92,-695.03C417.1,-642.99 370.02,-621.74 325.29,-585.57"/>
+<polygon fill="#3fb950" stroke="#3fb950" stroke-width="3" points="326.89,-583.94 320.44,-581.53 323.98,-587.44 326.89,-583.94"/>
 </g>
 <!-- mmw2&#45;&gt;pod_net -->
 <g id="edge13" class="edge">
 <title>mmw2&#45;&gt;pod_net</title>
-<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M680.08,-632.45C679.35,-613.66 681.75,-590.98 687.27,-552.64"/>
-<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="689.5,-553.17 688.18,-546.41 684.99,-552.51 689.5,-553.17"/>
+<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M798.46,-656.42C794.48,-639.13 793.75,-618.91 794.73,-586.46"/>
+<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="797,-586.66 794.96,-580.08 792.46,-586.5 797,-586.66"/>
 </g>
 <!-- mmw2&#45;&gt;sc_nfs -->
 <g id="edge24" class="edge">
 <title>mmw2&#45;&gt;sc_nfs</title>
-<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M774.8,-656.5C873.49,-598.61 894.22,-580.77 930.79,-527.4"/>
-<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="932.63,-528.74 934.41,-522.09 928.87,-526.18 932.63,-528.74"/>
+<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M910.73,-690.55C1051.69,-626.81 1076.99,-610.25 1130.49,-549.1"/>
+<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1132.13,-550.68 1134.7,-544.29 1128.71,-547.69 1132.13,-550.68"/>
 </g>
 <!-- mmw2&#45;&gt;tbmesh -->
 <g id="edge10" class="edge">
 <title>mmw2&#45;&gt;tbmesh</title>
-<path fill="none" stroke="#3fb950" stroke-width="3" d="M616.72,-673.48C460.91,-616.67 402.03,-593.61 348.89,-561.77"/>
-<polygon fill="#3fb950" stroke="#3fb950" stroke-width="3" points="350.32,-559.97 343.59,-558.51 347.94,-563.85 350.32,-559.97"/>
+<path fill="none" stroke="#3fb950" stroke-width="3" d="M752.93,-704.88C522.68,-643.16 446.3,-621.08 370.12,-583.49"/>
+<polygon fill="#3fb950" stroke="#3fb950" stroke-width="3" points="371.23,-581.5 364.4,-580.61 369.19,-585.56 371.23,-581.5"/>
 </g>
 <!-- x86w1&#45;&gt;pod_net -->
 <g id="edge14" class="edge">
 <title>x86w1&#45;&gt;pod_net</title>
-<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M1099.89,-699.73C978.39,-693.6 940.66,-675.22 768.55,-549.49"/>
-<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="770.05,-547.76 763.46,-545.76 767.36,-551.44 770.05,-547.76"/>
+<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M1235.59,-726.7C1092.19,-726.75 1052.89,-710.96 883.23,-583.41"/>
+<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="884.78,-581.72 878.21,-579.63 882.04,-585.36 884.78,-581.72"/>
 </g>
 <!-- sc_iscsi -->
 <g id="node15" class="node">
 <title>sc_iscsi</title>
-<path fill="#0c2030" stroke="#79c0ff" stroke-width="1.5" d="M1258.22,-520.08C1258.22,-520.08 1201.37,-520.08 1201.37,-520.08 1195.37,-520.08 1189.37,-514.08 1189.37,-508.08 1189.37,-508.08 1189.37,-483.93 1189.37,-483.93 1189.37,-477.93 1195.37,-471.93 1201.37,-471.93 1201.37,-471.93 1258.22,-471.93 1258.22,-471.93 1264.22,-471.93 1270.22,-477.93 1270.22,-483.93 1270.22,-483.93 1270.22,-508.08 1270.22,-508.08 1270.22,-514.08 1264.22,-520.08 1258.22,-520.08"/>
-<text xml:space="preserve" text-anchor="middle" x="1229.79" y="-504.32" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">iscsi&#45;lvmthin</text>
-<text xml:space="preserve" text-anchor="middle" x="1229.79" y="-493.07" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">RWO</text>
-<text xml:space="preserve" text-anchor="middle" x="1229.79" y="-481.82" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">openiscsi CSI</text>
+<path fill="#0c2030" stroke="#79c0ff" stroke-width="1.5" d="M1463.22,-542.58C1463.22,-542.58 1406.37,-542.58 1406.37,-542.58 1400.37,-542.58 1394.37,-536.58 1394.37,-530.58 1394.37,-530.58 1394.37,-506.43 1394.37,-506.43 1394.37,-500.43 1400.37,-494.43 1406.37,-494.43 1406.37,-494.43 1463.22,-494.43 1463.22,-494.43 1469.22,-494.43 1475.22,-500.43 1475.22,-506.43 1475.22,-506.43 1475.22,-530.58 1475.22,-530.58 1475.22,-536.58 1469.22,-542.58 1463.22,-542.58"/>
+<text xml:space="preserve" text-anchor="middle" x="1434.79" y="-526.83" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">iscsi&#45;lvmthin</text>
+<text xml:space="preserve" text-anchor="middle" x="1434.79" y="-515.58" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">RWO</text>
+<text xml:space="preserve" text-anchor="middle" x="1434.79" y="-504.32" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">openiscsi CSI</text>
 </g>
 <!-- x86w1&#45;&gt;sc_iscsi -->
 <g id="edge25" class="edge">
 <title>x86w1&#45;&gt;sc_iscsi</title>
-<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M1212.19,-638.14C1236.69,-598.28 1238.99,-578.12 1233.59,-528.49"/>
-<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1235.88,-528.45 1232.88,-522.25 1231.36,-528.97 1235.88,-528.45"/>
-<text xml:space="preserve" text-anchor="middle" x="1252.69" y="-591.54" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">RWO PVCs</text>
+<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M1372.79,-662.01C1412.29,-622.07 1420.79,-601.72 1429.49,-551.13"/>
+<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1431.74,-551.52 1430.61,-544.73 1427.25,-550.74 1431.74,-551.52"/>
+<text xml:space="preserve" text-anchor="middle" x="1430.69" y="-615.29" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">RWO PVCs</text>
 </g>
 <!-- sc_ceph -->
 <g id="node16" class="node">
 <title>sc_ceph</title>
-<path fill="#0c2030" stroke="#79c0ff" stroke-width="1.5" d="M1130.09,-520.08C1130.09,-520.08 1069.49,-520.08 1069.49,-520.08 1063.49,-520.08 1057.49,-514.08 1057.49,-508.08 1057.49,-508.08 1057.49,-483.93 1057.49,-483.93 1057.49,-477.93 1063.49,-471.93 1069.49,-471.93 1069.49,-471.93 1130.09,-471.93 1130.09,-471.93 1136.09,-471.93 1142.09,-477.93 1142.09,-483.93 1142.09,-483.93 1142.09,-508.08 1142.09,-508.08 1142.09,-514.08 1136.09,-520.08 1130.09,-520.08"/>
-<text xml:space="preserve" text-anchor="middle" x="1099.79" y="-504.32" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">ceph&#45;rbd</text>
-<text xml:space="preserve" text-anchor="middle" x="1099.79" y="-493.07" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">RWO</text>
-<text xml:space="preserve" text-anchor="middle" x="1099.79" y="-481.82" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">rook&#45;ceph CSI</text>
+<path fill="#0c2030" stroke="#79c0ff" stroke-width="1.5" d="M1335.09,-542.58C1335.09,-542.58 1274.49,-542.58 1274.49,-542.58 1268.49,-542.58 1262.49,-536.58 1262.49,-530.58 1262.49,-530.58 1262.49,-506.43 1262.49,-506.43 1262.49,-500.43 1268.49,-494.43 1274.49,-494.43 1274.49,-494.43 1335.09,-494.43 1335.09,-494.43 1341.09,-494.43 1347.09,-500.43 1347.09,-506.43 1347.09,-506.43 1347.09,-530.58 1347.09,-530.58 1347.09,-536.58 1341.09,-542.58 1335.09,-542.58"/>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-526.83" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">ceph&#45;rbd</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-515.58" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">RWO</text>
+<text xml:space="preserve" text-anchor="middle" x="1304.79" y="-504.32" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">rook&#45;ceph CSI</text>
 </g>
 <!-- x86w1&#45;&gt;sc_ceph -->
 <g id="edge27" class="edge">
 <title>x86w1&#45;&gt;sc_ceph</title>
-<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M1172.69,-638.38C1172.59,-597.79 1161.89,-577.69 1123.49,-526.95"/>
-<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1125.43,-525.74 1119.7,-521.93 1121.8,-528.49 1125.43,-525.74"/>
+<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M1328.69,-662.04C1341.19,-621.95 1337.39,-601.59 1317.59,-550.52"/>
+<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1319.76,-549.82 1315.22,-544.64 1315.55,-551.52 1319.76,-549.82"/>
 </g>
 <!-- x86w2&#45;&gt;pod_net -->
 <g id="edge15" class="edge">
 <title>x86w2&#45;&gt;pod_net</title>
-<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M915.61,-685.95C846.19,-667.03 819.89,-644.69 741.15,-550.72"/>
-<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="743.12,-549.53 737.21,-546 739.63,-552.45 743.12,-549.53"/>
+<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M1051.49,-714.24C962.86,-697.3 934.25,-678.02 853.48,-584.33"/>
+<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="855.38,-583.05 849.42,-579.6 851.93,-586.01 855.38,-583.05"/>
 </g>
 <!-- x86w2&#45;&gt;sc_iscsi -->
 <g id="edge26" class="edge">
 <title>x86w2&#45;&gt;sc_iscsi</title>
-<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M1053.89,-662.69C1156.19,-603.42 1175.59,-586.2 1211.19,-527.41"/>
-<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1213.14,-528.59 1214.54,-521.85 1209.24,-526.25 1213.14,-528.59"/>
+<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M1189.89,-694.57C1333.39,-628.91 1357.59,-612.95 1409.99,-549.27"/>
+<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1411.74,-550.73 1414.05,-544.25 1408.2,-547.88 1411.74,-550.73"/>
 </g>
 <!-- x86w2&#45;&gt;sc_ceph -->
 <g id="edge28" class="edge">
 <title>x86w2&#45;&gt;sc_ceph</title>
-<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M1051.79,-632.42C1083.69,-595.78 1090.59,-575.37 1096.19,-528.67"/>
-<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1098.45,-529 1096.99,-522.27 1093.93,-528.44 1098.45,-529"/>
+<path fill="none" stroke="#79c0ff" stroke-width="1.1" stroke-dasharray="5,2" d="M1189.99,-676.18C1258.09,-625.76 1271.99,-606.97 1293.19,-550.52"/>
+<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1295.25,-551.52 1295.33,-544.64 1290.97,-549.97 1295.25,-551.52"/>
 </g>
 <!-- svc_net -->
 <g id="node12" class="node">
 <title>svc_net</title>
-<path fill="#1c1a2d" stroke="#c8b1f5" stroke-width="1.5" d="M859.94,-349.1C859.94,-349.1 608.48,-349.1 608.48,-349.1 602.48,-349.1 592.92,-344.27 589.36,-339.43 589.36,-339.43 532.73,-262.47 532.73,-262.47 529.17,-257.63 531.61,-252.8 537.61,-252.8 537.61,-252.8 789.07,-252.8 789.07,-252.8 795.07,-252.8 804.63,-257.63 808.19,-262.47 808.19,-262.47 864.82,-339.43 864.82,-339.43 868.38,-344.27 865.94,-349.1 859.94,-349.1"/>
-<text xml:space="preserve" text-anchor="middle" x="698.77" y="-309.27" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Service Network &#160;10.43.0.0/16</text>
-<text xml:space="preserve" text-anchor="middle" x="698.77" y="-298.02" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">kube&#45;proxy &#160;iptables</text>
-<text xml:space="preserve" text-anchor="middle" x="698.77" y="-286.77" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">ClusterIP · NodePort · LB</text>
+<path fill="#1c1a2d" stroke="#c8b1f5" stroke-width="1.5" d="M1033.63,-371.6C1033.63,-371.6 720.62,-371.6 720.62,-371.6 714.62,-371.6 705.08,-366.75 701.54,-361.91 701.54,-361.91 629,-262.49 629,-262.49 625.46,-257.65 627.92,-252.8 633.92,-252.8 633.92,-252.8 946.93,-252.8 946.93,-252.8 952.93,-252.8 962.47,-257.65 966.01,-262.49 966.01,-262.49 1038.55,-361.91 1038.55,-361.91 1042.09,-366.75 1039.63,-371.6 1033.63,-371.6"/>
+<text xml:space="preserve" text-anchor="middle" x="833.77" y="-326.15" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Service Network &#160;DUAL&#45;STACK &#160;AD&#45;016</text>
+<text xml:space="preserve" text-anchor="middle" x="833.77" y="-314.9" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">10.43.0.0/16 &#160;+ &#160;fd43::/112</text>
+<text xml:space="preserve" text-anchor="middle" x="833.77" y="-303.65" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">kube&#45;proxy &#160;iptables &#160;(v4+v6)</text>
+<text xml:space="preserve" text-anchor="middle" x="833.77" y="-292.4" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">ClusterIP · NodePort · LoadBalancer</text>
 </g>
 <!-- pod_net&#45;&gt;svc_net -->
 <g id="edge16" class="edge">
 <title>pod_net&#45;&gt;svc_net</title>
-<path fill="none" stroke="#c8b1f5" stroke-width="1.1" d="M676.91,-447.32C665.28,-413.24 665.38,-394.53 677.75,-357.32"/>
-<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="679.9,-358.08 679.85,-351.2 675.59,-356.61 679.9,-358.08"/>
+<path fill="none" stroke="#c8b1f5" stroke-width="1.1" d="M784.84,-458.59C780.78,-430.05 784.17,-411.04 798.92,-379.22"/>
+<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="800.8,-380.58 801.53,-373.73 796.69,-378.63 800.8,-380.58"/>
 </g>
 <!-- coredns -->
 <g id="node13" class="node">
 <title>coredns</title>
-<path fill="#1c1a2d" stroke="#c8b1f5" stroke-width="1.5" d="M804.08,-183.8C804.08,-183.8 695.47,-183.8 695.47,-183.8 689.47,-183.8 683.47,-177.8 683.47,-171.8 683.47,-171.8 683.47,-147.66 683.47,-147.66 683.47,-141.66 689.47,-135.66 695.47,-135.66 695.47,-135.66 804.08,-135.66 804.08,-135.66 810.08,-135.66 816.08,-141.66 816.08,-147.66 816.08,-147.66 816.08,-171.8 816.08,-171.8 816.08,-177.8 810.08,-183.8 804.08,-183.8"/>
-<text xml:space="preserve" text-anchor="middle" x="749.77" y="-168.05" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">CoreDNS &#160;10.43.0.10</text>
-<text xml:space="preserve" text-anchor="middle" x="749.77" y="-156.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Cluster DNS</text>
-<text xml:space="preserve" text-anchor="middle" x="749.77" y="-145.55" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Upstream &#45;&gt; FreeIPA :53</text>
+<path fill="#1c1a2d" stroke="#c8b1f5" stroke-width="1.5" d="M964.7,-183.8C964.7,-183.8 826.85,-183.8 826.85,-183.8 820.85,-183.8 814.85,-177.8 814.85,-171.8 814.85,-171.8 814.85,-147.66 814.85,-147.66 814.85,-141.66 820.85,-135.66 826.85,-135.66 826.85,-135.66 964.7,-135.66 964.7,-135.66 970.7,-135.66 976.7,-141.66 976.7,-147.66 976.7,-147.66 976.7,-171.8 976.7,-171.8 976.7,-177.8 970.7,-183.8 964.7,-183.8"/>
+<text xml:space="preserve" text-anchor="middle" x="895.77" y="-168.05" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">CoreDNS &#160;10.43.0.10 / fd43::a</text>
+<text xml:space="preserve" text-anchor="middle" x="895.77" y="-156.8" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Cluster DNS &#160;A + AAAA records</text>
+<text xml:space="preserve" text-anchor="middle" x="895.77" y="-145.55" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#e6edf3">Upstream &#45;&gt; FreeIPA :53</text>
 </g>
 <!-- svc_net&#45;&gt;coredns -->
 <g id="edge17" class="edge">
 <title>svc_net&#45;&gt;coredns</title>
-<path fill="none" stroke="#c8b1f5" stroke-width="1.1" d="M704.24,-252.19C708.37,-220.54 712.6,-206.09 723.51,-190.56"/>
-<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="725.15,-192.17 727.24,-185.6 721.51,-189.44 725.15,-192.17"/>
+<path fill="none" stroke="#c8b1f5" stroke-width="1.1" d="M842.6,-252.39C848.07,-221.37 853.67,-206.82 866.84,-190.46"/>
+<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="868.51,-192.02 870.98,-185.59 865.04,-189.07 868.51,-192.02"/>
 </g>
 <!-- coredns&#45;&gt;ext_id -->
 <g id="edge18" class="edge">
 <title>coredns&#45;&gt;ext_id</title>
-<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M784.22,-134.94C903.5,-49.36 935.26,-30.27 1005.25,-25.68"/>
-<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="1005.07,-27.97 1011.43,-25.33 1004.81,-23.42 1005.07,-27.97"/>
-<text xml:space="preserve" text-anchor="middle" x="887.52" y="-94.05" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">upstream DNS</text>
-<text xml:space="preserve" text-anchor="middle" x="887.52" y="-84.3" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">.lab.local zone</text>
+<path fill="none" stroke="#c8b1f5" stroke-width="1.1" stroke-dasharray="5,2" d="M934.01,-135.05C1079.59,-41.34 1113.99,-23.19 1198.09,-22.4"/>
+<polygon fill="#c8b1f5" stroke="#c8b1f5" stroke-width="1.1" points="1197.94,-24.68 1204.43,-22.38 1197.92,-20.13 1197.94,-24.68"/>
+<text xml:space="preserve" text-anchor="middle" x="1057.49" y="-94.05" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">upstream DNS</text>
+<text xml:space="preserve" text-anchor="middle" x="1057.49" y="-84.3" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">.lab.local zone</text>
 </g>
 <!-- sc_nfs&#45;&gt;ext_stor -->
 <g id="edge20" class="edge">
 <title>sc_nfs&#45;&gt;ext_stor</title>
-<path fill="none" stroke="#79c0ff" stroke-width="1.1" d="M975.2,-471.32C1047.49,-395.06 1064.89,-375.16 1082.89,-338.35"/>
-<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1084.81,-339.62 1085.57,-332.77 1080.71,-337.65 1084.81,-339.62"/>
-<text xml:space="preserve" text-anchor="middle" x="999.02" y="-390.12" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">NFSv4.1</text>
+<path fill="none" stroke="#79c0ff" stroke-width="1.1" d="M1180.69,-493.78C1258.39,-413.48 1274.69,-394.28 1291.49,-350.04"/>
+<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1293.62,-350.84 1293.8,-343.96 1289.37,-349.23 1293.62,-350.84"/>
+<text xml:space="preserve" text-anchor="middle" x="1204.99" y="-412.62" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">NFSv4.1</text>
 </g>
 <!-- sc_iscsi&#45;&gt;ext_stor -->
 <g id="edge21" class="edge">
 <title>sc_iscsi&#45;&gt;ext_stor</title>
-<path fill="none" stroke="#79c0ff" stroke-width="1.1" d="M1225.09,-471.41C1210.59,-396.75 1202.79,-379.07 1146.89,-335.95"/>
-<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1148.46,-334.28 1141.92,-332.14 1145.7,-337.9 1148.46,-334.28"/>
-<text xml:space="preserve" text-anchor="middle" x="1235.29" y="-390.12" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">iSCSI MPIO</text>
+<path fill="none" stroke="#79c0ff" stroke-width="1.1" d="M1430.79,-493.82C1417.79,-414.83 1410.39,-397.32 1349.29,-347.5"/>
+<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1350.98,-345.94 1344.49,-343.63 1348.12,-349.48 1350.98,-345.94"/>
+<text xml:space="preserve" text-anchor="middle" x="1440.29" y="-412.62" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">iSCSI MPIO</text>
 </g>
 <!-- sc_ceph&#45;&gt;ext_stor -->
 <g id="edge22" class="edge">
 <title>sc_ceph&#45;&gt;ext_stor</title>
-<path fill="none" stroke="#79c0ff" stroke-width="1.1" d="M1107.29,-471.4C1128.99,-399.12 1131.89,-380.85 1115.69,-338.81"/>
-<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1117.82,-338.01 1113.31,-332.81 1113.6,-339.69 1117.82,-338.01"/>
-<text xml:space="preserve" text-anchor="middle" x="1121.19" y="-390.12" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">Ceph RBD</text>
+<path fill="none" stroke="#79c0ff" stroke-width="1.1" d="M1312.79,-493.75C1337.49,-416.79 1340.19,-398.76 1320.79,-349.98"/>
+<polygon fill="#79c0ff" stroke="#79c0ff" stroke-width="1.1" points="1322.96,-349.27 1318.42,-344.09 1318.74,-350.97 1322.96,-349.27"/>
+<text xml:space="preserve" text-anchor="middle" x="1326.19" y="-412.62" font-family="Helvetica,sans-Serif" font-size="8.00" fill="#8b949e">Ceph RBD</text>
 </g>
 </g>
 </svg></div>
@@ -1895,7 +1897,7 @@
         ranksep=0.95
         rankdir=TB
         splines=curved
-        label="k3s Cluster — SDN & Node / Workload View\nPod CIDR: 10.42.0.0/16  ·  Service CIDR: 10.43.0.0/16  ·  CNI: Flannel VXLAN"
+        label="k3s Cluster — SDN & Node / Workload View\nIPv4 Pod: 10.42.0.0/16  ·  IPv6 Pod: fd42::/48  ·  IPv4 Svc: 10.43.0.0/16  ·  IPv6 Svc: fd43::/112  ·  CNI: Flannel VXLAN dual-stack  ·  AD-016"
         labelloc=t
         labeljust=l
     ]
@@ -1942,9 +1944,9 @@
     subgraph cluster_sdn {
         label="Cluster SDN — Flannel VXLAN Overlay"
         style="rounded,filled" fillcolor="#0d1429" color="#c8b1f5" fontcolor="#c8b1f5" fontsize=9
-        pod_net [ label="Pod Network  10.42.0.0/16\nFlannel VXLAN  UDP :8472\nper-node /24 slice"     fillcolor="#1c1a2d" color="#c8b1f5" shape=parallelogram ]
-        svc_net [ label="Service Network  10.43.0.0/16\nkube-proxy  iptables\nClusterIP · NodePort · LB" fillcolor="#1c1a2d" color="#c8b1f5" shape=parallelogram ]
-        coredns [ label="CoreDNS  10.43.0.10\nCluster DNS\nUpstream -> FreeIPA :53"                    fillcolor="#1c1a2d" color="#c8b1f5" ]
+        pod_net [ label="Pod Network  DUAL-STACK  AD-016\n10.42.0.0/16  +  fd42::/48\nFlannel VXLAN  UDP :8472  (IPv4) · :8473  (IPv6)\nper-node /24 (v4)  ·  per-node /64 (v6)" fillcolor="#1c1a2d" color="#c8b1f5" shape=parallelogram ]
+        svc_net [ label="Service Network  DUAL-STACK  AD-016\n10.43.0.0/16  +  fd43::/112\nkube-proxy  iptables  (v4+v6)\nClusterIP · NodePort · LoadBalancer"         fillcolor="#1c1a2d" color="#c8b1f5" shape=parallelogram ]
+        coredns [ label="CoreDNS  10.43.0.10 / fd43::a\nCluster DNS  A + AAAA records\nUpstream -> FreeIPA :53"                                                        fillcolor="#1c1a2d" color="#c8b1f5" ]
     }
 
     // Storage classes

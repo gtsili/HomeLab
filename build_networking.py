@@ -324,7 +324,7 @@ digraph k8s_cluster {
         ranksep=0.95
         rankdir=TB
         splines=curved
-        label="k3s Cluster — SDN & Node / Workload View\nPod CIDR: 10.42.0.0/16  ·  Service CIDR: 10.43.0.0/16  ·  CNI: Flannel VXLAN"
+        label="k3s Cluster — SDN & Node / Workload View\nIPv4 Pod: 10.42.0.0/16  ·  IPv6 Pod: fd42::/48  ·  IPv4 Svc: 10.43.0.0/16  ·  IPv6 Svc: fd43::/112  ·  CNI: Flannel VXLAN dual-stack  ·  AD-016"
         labelloc=t
         labeljust=l
     ]
@@ -371,9 +371,9 @@ digraph k8s_cluster {
     subgraph cluster_sdn {
         label="Cluster SDN — Flannel VXLAN Overlay"
         style="rounded,filled" fillcolor="#0d1429" color="#c8b1f5" fontcolor="#c8b1f5" fontsize=9
-        pod_net [ label="Pod Network  10.42.0.0/16\nFlannel VXLAN  UDP :8472\nper-node /24 slice"     fillcolor="#1c1a2d" color="#c8b1f5" shape=parallelogram ]
-        svc_net [ label="Service Network  10.43.0.0/16\nkube-proxy  iptables\nClusterIP · NodePort · LB" fillcolor="#1c1a2d" color="#c8b1f5" shape=parallelogram ]
-        coredns [ label="CoreDNS  10.43.0.10\nCluster DNS\nUpstream -> FreeIPA :53"                    fillcolor="#1c1a2d" color="#c8b1f5" ]
+        pod_net [ label="Pod Network  DUAL-STACK  AD-016\n10.42.0.0/16  +  fd42::/48\nFlannel VXLAN  UDP :8472  (IPv4) · :8473  (IPv6)\nper-node /24 (v4)  ·  per-node /64 (v6)" fillcolor="#1c1a2d" color="#c8b1f5" shape=parallelogram ]
+        svc_net [ label="Service Network  DUAL-STACK  AD-016\n10.43.0.0/16  +  fd43::/112\nkube-proxy  iptables  (v4+v6)\nClusterIP · NodePort · LoadBalancer"         fillcolor="#1c1a2d" color="#c8b1f5" shape=parallelogram ]
+        coredns [ label="CoreDNS  10.43.0.10 / fd43::a\nCluster DNS  A + AAAA records\nUpstream -> FreeIPA :53"                                                        fillcolor="#1c1a2d" color="#c8b1f5" ]
     }
 
     // Storage classes
@@ -651,7 +651,7 @@ HTML = f"""<!DOCTYPE html>
     <span class="legend-title">Cluster legend</span>
     <span class="leg"><span class="leg-swatch" style="background:#122d1a;border-color:#3fb950"></span>ARM64 nodes (mm-cp, mm-w1, mm-w2)</span>
     <span class="leg"><span class="leg-swatch" style="background:#0c2a3d;border-color:#58a6ff"></span>AMD64 nodes (x86-w1, x86-w2)  taint: arch=amd64:NoSchedule</span>
-    <span class="leg"><span class="leg-swatch" style="background:#1c1a2d;border-color:#c8b1f5"></span>SDN Overlay (Flannel VXLAN  10.42/16  ·  svc 10.43/16)</span>
+    <span class="leg"><span class="leg-swatch" style="background:#1c1a2d;border-color:#c8b1f5"></span>SDN Overlay — Dual-Stack (pod 10.42/16+fd42::/48 · svc 10.43/16+fd43::/112) · AD-016</span>
     <span class="leg"><span class="leg-swatch" style="background:#0c2030;border-color:#79c0ff"></span>Storage Classes → NFS / iSCSI / Ceph</span>
     <span class="leg"><span class="leg-line" style="background:#3fb950;height:3px;border-radius:2px"></span>TB4 mesh (40 Gb/s, bold)</span>
     <span class="leg"><span class="leg-line dashed" style="color:#c8b1f5"></span>Dashed = Flannel / DNS / auth overlay</span>
