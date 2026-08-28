@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Build lab_networking-ALPHA-002.html
+Build lab_networking-ALPHA-005.html
 Three embedded Graphviz SVG diagrams for My Local LAB (Mixed Arch k8s)
-Sources: lab_architecture-ALPHA-002 topology
+Sources: lab_architecture-ALPHA-005 topology
 """
 
 import pygraphviz as pgv
@@ -44,7 +44,7 @@ digraph logical_topology {
         ranksep=0.9
         rankdir=TB
         splines=ortho
-        label="Logical Topology  —  My Local LAB (Mixed Arch k8s)\nRef: lab_architecture-ALPHA-002  |  Generated: """ + TODAY + r""""
+        label="Logical Topology  —  My Local LAB (Mixed Arch k8s)\nRef: lab_architecture-ALPHA-005  |  Generated: """ + TODAY + r""""
         labelloc=t
         labeljust=l
     ]
@@ -442,7 +442,7 @@ HTML = f"""<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lab Networking — ALPHA-002</title>
+<title>Lab Networking — ALPHA-005</title>
 <style>
   :root {{
     --bg:        #0d1117;
@@ -568,12 +568,12 @@ HTML = f"""<!DOCTYPE html>
 
 <!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
 <div class="page-header">
-  <h1>Lab Networking <span>ALPHA-002</span></h1>
+  <h1>Lab Networking <span>ALPHA-005</span></h1>
   <div class="meta-row">
     <div class="meta-item"><strong>Project:</strong> My Local LAB (Mixed Arch k8s)</div>
     <div class="meta-item"><strong>Generated:</strong> {TODAY}</div>
     <div class="meta-item"><strong>Engine:</strong> Graphviz {pgv.__version__} via pygraphviz</div>
-    <div class="meta-item"><strong>Ref:</strong> <a class="xref-link" href="lab_architecture-ALPHA-002.html">lab_architecture-ALPHA-002.html</a></div>
+    <div class="meta-item"><strong>Ref:</strong> <a class="xref-link" href="lab_architecture-ALPHA-005.html">lab_architecture-ALPHA-005.html</a></div>
     <div class="meta-item"><span class="badge">3 diagrams embedded</span></div>
   </div>
 </div>
@@ -666,8 +666,8 @@ HTML = f"""<!DOCTYPE html>
 
 <!-- ═══════════════════════════════ FOOTER ═══════════════════════════════ -->
 <div class="page-footer">
-  <span>lab_networking-ALPHA-002.html  ·  My Local LAB (Mixed Arch k8s)  ·  {TODAY}</span>
-  <span>Graphviz {pgv.__version__}  ·  DOT sources embedded in &lt;details&gt; blocks above  ·  Ref: <a class="xref-link" href="lab_architecture-ALPHA-002.html">lab_architecture-ALPHA-002.html</a></span>
+  <span>lab_networking-ALPHA-005.html  ·  My Local LAB (Mixed Arch k8s)  ·  {TODAY}</span>
+  <span>Graphviz {pgv.__version__}  ·  DOT sources embedded in &lt;details&gt; blocks above  ·  Ref: <a class="xref-link" href="lab_architecture-ALPHA-005.html">lab_architecture-ALPHA-005.html</a></span>
 </div>
 
 <!-- ═══════════════════════════════ TAB JS ═══════════════════════════════ -->
@@ -683,7 +683,7 @@ function showTab(name, el) {{
 </body>
 </html>"""
 
-out_path = "/home/ubuntu/lab_networking-ALPHA-002.html"
+out_path = "/home/ubuntu/lab_networking-ALPHA-005.html"
 with open(out_path, "w", encoding="utf-8") as f:
     f.write(HTML)
 
